@@ -96,27 +96,28 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 ## B3. Team eval cases
 
-10 cases trong `data/eval_group.json` (do nhóm G27 tự thiết kế):
+10 cases trong `data/eval_group.json` (do nhóm G27 tự thiết kế).
+Run File: `runs/v2_B_base_openai_eval_20260729T113410438169.json` | Kết quả: **9/10 PASS (90%)**
 
 **5 Single-turn cases:**
 
-| Case ID | What It Tests | Expected Tool | failure_type |
+| Case ID | What It Tests | Expected Tool | Result |
 |---|---|---|---|
-| G01_monthly_ai_news | `'tháng này'` → `timeframe=month` cho `lookup` | `lookup(topic=news, timeframe=month)` | wrong_arg_value |
-| G02_latest_topic_posts | Tweet theo chủ đề → `social_search`, không phải `timeline` | `social_search(query="chip Nvidia", search_type=Latest)` | wrong_tool |
-| G03_read_provided_url | Có URL cụ thể → `fetch`, không search | `fetch(url=https://anthropic.com/news/claude-3-5-sonnet)` | wrong_tool |
-| G04_send_requires_confirmation | Lệnh gửi ngay → phải `clarify yes_no` trước | `clarify(response_type=yes_no)` | wrong_boundary |
-| G05_capability_question_no_tool | Hỏi khả năng agent → trả lời thẳng, không dùng tool | no_tool | unnecessary_tool |
+| G01_monthly_ai_news | `'tháng này'` → `timeframe=month` cho `lookup` | `lookup(topic=news, timeframe=month)` | ❌ Fail (wrong_arg_value: query expected 'AI') |
+| G02_latest_topic_posts | Tweet theo chủ đề → `social_search`, không phải `timeline` | `social_search(query="chip Nvidia", search_type=Latest)` | ✅ PASS |
+| G03_read_provided_url | Có URL cụ thể → `fetch`, không search | `fetch(url=https://anthropic.com/news/claude-3-5-sonnet)` | ✅ PASS |
+| G04_send_requires_confirmation | Lệnh gửi ngay → phải `clarify yes_no` trước | `clarify(response_type=yes_no)` | ✅ PASS |
+| G05_capability_question_no_tool | Hỏi khả năng agent → trả lời thẳng, không dùng tool | no_tool | ✅ PASS |
 
 **5 Multi-turn cases:**
 
-| Case ID | What It Tests | Expected Tool (turn cuối) | failure_type |
+| Case ID | What It Tests | Expected Tool (turn cuối) | Result |
 |---|---|---|---|
-| G06_multiturn_carry_monthly_topic | Đổi chủ đề nhưng giữ `timeframe=month` và `topic=news` | `lookup(query="an ninh mạng", topic=news, timeframe=month)` | wrong_arg_value |
-| G07_multiturn_handle_and_limit | Giữ handle `sama`, cập nhật `limit=7` | `timeline(screenname=sama, limit=7)` | wrong_arg_value |
-| G08_multiturn_missing_url | User xác nhận không có link → agent vẫn phải `clarify` | `clarify(response_type=text)` | missing_info |
-| G09_multiturn_cancel_send | User huỷ lệnh gửi → không gọi tool, giải thích | no_tool | unnecessary_tool |
-| G10_multiturn_switch_to_social_top | Chuyển từ web news sang Twitter Top về cùng chủ đề | `social_search(query="OpenAI", search_type=Top)` | wrong_tool |
+| G06_multiturn_carry_monthly_topic | Đổi chủ đề nhưng giữ `timeframe=month` và `topic=news` | `lookup(query="an ninh mạng", topic=news, timeframe=month)` | ✅ PASS |
+| G07_multiturn_handle_and_limit | Giữ handle `sama`, cập nhật `limit=7` | `timeline(screenname=sama, limit=7)` | ✅ PASS |
+| G08_multiturn_missing_url | User xác nhận không có link → agent vẫn phải `clarify` | `clarify(response_type=text)` | ✅ PASS |
+| G09_multiturn_cancel_send | User huỷ lệnh gửi → không gọi tool, giải thích | no_tool | ✅ PASS |
+| G10_multiturn_switch_to_social_top | Chuyển từ web news sang Twitter Top về cùng chủ đề | `social_search(query="OpenAI", search_type=Top)` | ✅ PASS |
 
 ## B4. Live chat evidence
 
@@ -145,18 +146,12 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 | Category | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
-| Core: `lookup` (Tavily) | `v4_B_base_openai_*.json`, transcript T2 & T9 | Tìm tin tức đúng topic+timeframe, query sạch | Quota Tavily free tier |
+| Core: `lookup` (Tavily) | `runs/v4_B_base_openai_*.json`, transcript T2 & T9 | Tìm tin tức đúng topic+timeframe, query sạch | Quota Tavily free tier |
 | Core: `fetch` (Firecrawl) | transcript T4 | Đọc URL cụ thể thành công | Mỗi lần fetch tốn credit |
 | Core: `timeline` (RapidAPI) | transcript T3, case R07 (v3 PASS) | Lấy tweet theo handle, map tên nổi tiếng → handle tự động | RapidAPI free plan có rate limit |
 | Core: `social_search` (RapidAPI) | case R02, R06 (v3 PASS) | Tìm tweet theo keyword, Latest/Top | Rate limit |
 | Core: `clarify` | case R10, R11 (v3 PASS) | Hỏi lại đúng khi thiếu info, xác nhận trước khi send | — |
 | Extension: `policy` | `artifacts/tools.yaml`, `tools/policy` | Tra cứu quy định nội bộ | Cần file policy md chuẩn |
-| Core: `lookup` | `v3_B_base_openai_*.json` | Tìm tin theo topic+timeframe, query sạch | Quota API |
-| Core: `fetch` | transcript T4 | Đọc URL cụ thể thành công | Credit cost |
-| Core: `timeline` | transcript T3 | Lấy tweet handle, map tên → handle | Rate limit |
-| Core: `social_search` | case R02, R06 (v3 PASS) | Tìm tweet keyword, Latest/Top | Rate limit |
-| Core: `clarify` | case R10, R11 (v3 PASS) | Hỏi lại đúng thiếu info, confirm gửi | — |
-| Extension: `policy` | `artifacts/tools.yaml` | Tra cứu quy định nội bộ | Cần file policy md |
 | Extension: `papers` | `tools/papers` | Tìm bài báo arXiv | Tài nguyên server |
 | Extension: `paper_text` | `tools/paper_text` | Trích xuất văn bản PDF | OCR/Resource |
 | Extension: `format` | `tools/format` | Trình bày digest markdown | Formatting |
