@@ -78,8 +78,8 @@ Fill from `artifacts/version_log.csv` and `runs/*.json`.
 |---|---|---|---:|---:|---:|---:|---|
 | v0 | Baseline (trap prompt — không có luật cụ thể) | Prompt cố tình có lỗi để đo baseline | **0.70** | 0.75 | 0.70 | 1.00 | `v0_B_base_openai_20260729T102018444825.json` |
 | v1 | Sửa `system_prompt.md`: clarify khi thiếu handle/URL, boundary yes/no, từ chối out-of-scope | Thêm luật rõ ràng sẽ fix missing_info + wrong_boundary + out_of_scope | **0.95** | 0.95 | 0.95 | 0.83 | `v1_B_base_openai_20260729T103707406239.json` |
-| v2 | Sửa `system_prompt.md`: luật huỷ bỏ tool khi user cancel, xử lý song song rõ hơn | Explicit source switch nên xoá tool bị huỷ khỏi các turn sau | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v2_B_base_openai_20260729T111647141782.json` |
-| v3 | Sửa `system_prompt.md`: chuẩn hoá query lookup — keyword sạch vào `query`, ngữ nghĩa thời gian vào `timeframe`/`topic` | Tách đúng field sẽ fix các wrong_arg_value query còn sót | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v4_B_base_openai_20260729T112823832198.json` |
+| v2 | Sửa `system_prompt.md`: luật huỷ bỏ tool khi user cancel, xử lý song song rõ hơn | Explicit source switch nên xoá tool bị huỷ khỏi các turn sau | **1.00** | **1.00** | **1.00** | **1.00** | `v2_B_base_openai_20260729T111647141782.json` |
+| v3 | Sửa `system_prompt.md`: chuẩn hoá query lookup — keyword sạch vào `query`, ngữ nghĩa thời gian vào `timeframe`/`topic` | Tách đúng field sẽ fix các wrong_arg_value query còn sót | **1.00** | **1.00** | **1.00** | **1.00** | `v4_B_base_openai_20260729T112823832198.json` |
 
 ## B2. Failure analysis
 
@@ -124,19 +124,19 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 | Turn | User Input | Version | Tool Calls | Outcome |
 |---|---|---|---|---|
-| 2 | `"hello"` | v0 | `send(...)` → `send(confirmed=true)` | ❌ Gọi `send` cho tin chào hỏi — sai boundary |
-| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(...)` × 3 lần | ⚠️ Đúng tool nhưng lặp 3 lần, query nhồi ngữ nghĩa |
-| 4 | `"hello"` | v0 | `lookup(query="tin tức công nghệ nổi bật hôm nay")` | ❌ Câu chào không cần tool, v0 vẫn gọi lookup |
+| 2 | `"hello"` | v0 | `send(...)` → `send(confirmed=true)` | Gọi `send` cho tin chào hỏi — sai boundary |
+| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(...)` × 3 lần | Đúng tool nhưng lặp 3 lần, query nhồi ngữ nghĩa |
+| 4 | `"hello"` | v0 | `lookup(query="tin tức công nghệ nổi bật hôm nay")` | Câu chào không cần tool, v0 vẫn gọi lookup |
 
 **Phiên 2 (v3 — prompt final, demo đa kịch bản):** `ui_v0_openrouter_20260729T121747681915.transcript.json`
 
 | Turn | User Input | Version | Tool Calls | Outcome |
 |---|---|---|---|---|
-| 2 | `"Tin AI hôm nay có gì nổi bật?"` | v3 | `lookup(query="AI", topic=news, timeframe=day)` | ✅ Query sạch, routing đúng |
-| 3 | `"Lấy 5 tweet mới nhất của Sam Altman."` | v3 | `timeline(screenname="sama", limit=5)` | ✅ Map tên → handle tự động |
+| 2 | `"Tin AI hôm nay có gì nổi bật?"` | v3 | `lookup(query="AI", topic=news, timeframe=day)` | Query sạch, routing đúng |
+| 3 | `"Lấy 5 tweet mới nhất của Sam Altman."` | v3 | `timeline(screenname="sama", limit=5)` | Map tên → handle tự động |
 | 4 | `"Tóm tắt bài này giúp mình: https://openai.com/news/"` | v3 | `fetch(url="https://openai.com/news/")` | ✅ Có URL cụ thể → gọi fetch, không search |
-| 5 | `"năm nay anh bảy vô địch wc đúng không?"` | v3 | *(no tool)* | ✅ Từ chối đúng — ngoài phạm vi |
-| 6 | `"hi"` | v3 | *(no tool)* | ✅ Câu chào → trả lời thẳng, không gọi tool |
+| 5 | `"năm nay anh bảy vô địch wc đúng không?"` | v3 | *(no tool)* | Từ chối đúng — ngoài phạm vi |
+| 6 | `"hi"` | v3 | *(no tool)* | Câu chào → trả lời thẳng, không gọi tool |
 | 9 | `"những công nghệ AI mới nhất hiện nay đang có những gì?"` | v3 | `lookup(query="công nghệ AI mới", topic=news)` | ✅ Lookup đúng, không nhồi "mới nhất" vào query |
 
 > **So sánh v0 vs v3:** v0 gọi `send` sai, gọi tool thừa cho câu chào, nhồi ngữ nghĩa vào query. v3 routing chuẩn 100%: đúng tool, query sạch, từ chối ngoài phạm vi đọng nhất.
