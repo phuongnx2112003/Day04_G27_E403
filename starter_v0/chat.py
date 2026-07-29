@@ -5,7 +5,7 @@ import json
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from env_loader import load_lab_env
 from providers import make_provider
@@ -84,10 +84,15 @@ def run_model_tool_loop(
     tools: list[dict[str, Any]],
     model: str | None,
     max_tool_rounds: int,
+    on_event: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     working_messages = list(messages)
     rounds: list[dict[str, Any]] = []
     all_tool_events: list[dict[str, Any]] = []
+
+    def emit(event: dict[str, Any]) -> None:
+        if on_event:
+            on_event(event)
 
     for round_index in range(1, max_tool_rounds + 1):
         response = provider.complete(working_messages, tools, model=model, temperature=0.0)
@@ -98,9 +103,15 @@ def run_model_tool_loop(
             "tool_calls": [{"name": call.name, "args": call.args} for call in calls],
             "tool_results": [],
         }
+        emit({
+            "type": "tool_calls",
+            "round": round_index,
+            "tool_calls": round_record["tool_calls"],
+        })
 
         if not calls:
             rounds.append(round_record)
+            emit({"type": "finished", "round": round_index, "status": "answered"})
             return {
                 "status": "answered",
                 "assistant_text": response.text or "",
@@ -113,9 +124,11 @@ def run_model_tool_loop(
 
         for call in calls:
             print(f"🔧 {call.name}({json.dumps(call.args, ensure_ascii=False, sort_keys=True)})")
+            emit({"type": "tool_started", "round": round_index, "tool": call.name, "args": call.args})
             event = execute_tool_call(call)
             round_record["tool_results"].append(event)
             all_tool_events.append(event)
+            emit({"type": "tool_result", "round": round_index, "event": event})
 
             # Detect the clarification/pause tool by its output flag (rename-proof),
             # not by a hard-coded tool name.
@@ -123,6 +136,7 @@ def run_model_tool_loop(
             if isinstance(result, dict) and result.get("awaiting_user"):
                 question = result.get("question") or call.args.get("question") or "Bạn bổ sung thêm thông tin nhé."
                 rounds.append(round_record)
+                emit({"type": "finished", "round": round_index, "status": "waiting_for_user"})
                 return {
                     "status": "waiting_for_user",
                     "assistant_text": question,
@@ -135,6 +149,7 @@ def run_model_tool_loop(
         rounds.append(round_record)
         working_messages.append(tool_results_message(non_clarification_events))
 
+    emit({"type": "finished", "round": max_tool_rounds, "status": "max_tool_rounds"})
     return {
         "status": "max_tool_rounds",
         "assistant_text": f"Stopped after {max_tool_rounds} tool rounds. Inspect the transcript for details.",

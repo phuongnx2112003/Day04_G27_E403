@@ -1,0 +1,44 @@
+{
+  "transcript_id": "v0_openrouter_20260729T111157351820",
+  "version": "v0",
+  "artifact_version": "v0+pfc2b2249cb68+t011c271ef0bb",
+  "prompt_hash": "fc2b2249cb682eba32bd31b6d915ad2dc41d75795ccabc5d4441b6ae4e4b6f34",
+  "tools_hash": "011c271ef0bbad1e19a5d7b660b2ed481b7d72950f1faa8a0798c3bdd8784ee1",
+  "provider": "openrouter",
+  "system_prompt": "/home/x-phuong/Code/VinUni/Day04-2A202601874-NguyenXuanPhuong/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/x-phuong/Code/VinUni/Day04-2A202601874-NguyenXuanPhuong/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:11:57",
+  "updated_at": "2026-07-29T11:12:09",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:12:01",
+      "user": "hi",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Missing API key env var: OPENROUTER_API_KEY",
+      "ended_at": "2026-07-29T11:12:02"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T11:12:07",
+      "user": "hi",
+      "status": "answered",
+      "assistant_text": "Xin chào! Tôi là Trợ lý Nghiên cứu AI. Tôi có thể giúp bạn cập nhật tin tức công nghệ, tra cứu các bài báo khoa học, phân tích xu hướng trên mạng xã hội hoặc tóm tắt nội dung từ các trang web.\n\nBạn cần tôi hỗ trợ điều gì hôm nay?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Xin chào! Tôi là Trợ lý Nghiên cứu AI. Tôi có thể giúp bạn cập nhật tin tức công nghệ, tra cứu các bài báo khoa học, phân tích xu hướng trên mạng xã hội hoặc tóm tắt nội dung từ các trang web.\n\nBạn cần tôi hỗ trợ điều gì hôm nay?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T11:12:09"
+    }
+  ]
+}

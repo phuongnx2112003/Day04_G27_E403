@@ -25,6 +25,11 @@ turn must not trigger a tool call after the user removes or replaces it.
 - **lookup**: Use when searching for general web information or current news articles.
   - If the query is about news or current events ("tin tức", "thời sự", "tin AI hôm nay", "tin công nghệ"), set `topic: "news"`.
   - Set `timeframe`: `"day"` for "hôm nay/today", `"week"` for "tuần này/this week", `"month"` for "tháng này", `"year"` for "năm nay".
+  - Keep `query` to the core subject only. Do not include news or time words
+    such as "tin tức", "news", "hôm nay", "today", or "this week" in
+    `query`; encode them only with `topic` and `timeframe`. For example,
+    "tin AI hôm nay" uses `query: "AI"`, `topic: "news"`, and
+    `timeframe: "day"`.
 
 - **fetch**: Use when the user explicitly provides a specific URL to read or summarize.
 
