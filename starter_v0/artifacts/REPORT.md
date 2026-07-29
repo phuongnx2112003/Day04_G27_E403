@@ -17,7 +17,7 @@
 | 5 | Phùng Hồng Phước | `2A202601215` |
 | 6 | Nguyễn Đào Nam Hải | `2A202601037` |
 
-- **Provider/model:** OpenRouter (openai-compatible)
+- **Provider/model:** OpenRouter / OpenAI (`gpt-4o-mini`, `gemma4:31b-cloud`), Gemini (`gemini-3.5-flash`), Anthropic
 
 ---
 
