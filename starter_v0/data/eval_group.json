@@ -3,5 +3,138 @@
   "dataset_role": "group",
   "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_monthly_ai_news",
+      "phase": "B",
+      "query": "Tổng hợp tin tức AI trong tháng này.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "month"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Maps 'tháng này' to lookup news with timeframe=month."}
+    },
+    {
+      "id": "G02_latest_topic_posts",
+      "phase": "B",
+      "query": "Tìm các tweet mới nhất về chip Nvidia.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "social_search", "args": {"query": "chip Nvidia", "search_type": "Latest"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Routes social posts about a topic to social_search, not timeline or web lookup."}
+    },
+    {
+      "id": "G03_read_provided_url",
+      "phase": "B",
+      "query": "Đọc và tóm tắt trang này: https://www.anthropic.com/news/claude-3-5-sonnet",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "fetch", "args": {"url": "https://www.anthropic.com/news/claude-3-5-sonnet"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Uses fetch for an explicitly supplied URL rather than performing a search."}
+    },
+    {
+      "id": "G04_send_requires_confirmation",
+      "phase": "B",
+      "query": "Gửi ngay bản tóm tắt thị trường này lên Telegram của nhóm.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {"name": "clarify", "args": {"response_type": "yes_no"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Requires explicit yes/no confirmation before an external send action."}
+    },
+    {
+      "id": "G05_capability_question_no_tool",
+      "phase": "B",
+      "query": "Bạn có thể tìm và tổng hợp thông tin bằng những nguồn nào?",
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true, "behavior": "answer_without_tool"},
+      "metadata": {"what_it_tests": "Answers a capability question directly without invoking research tools."}
+    },
+    {
+      "id": "G06_multiturn_carry_monthly_topic",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tin tức AI trong tháng này."},
+        {"role": "user", "content": "Chuyển chủ đề sang an ninh mạng."},
+        {"role": "user", "content": "Chỉ lấy tin tức của chủ đề đó thôi."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "an ninh mạng", "topic": "news", "timeframe": "month"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Carries news/month context while replacing the topic with the user's correction."}
+    },
+    {
+      "id": "G07_multiturn_handle_and_limit",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Lấy tweet mới nhất của Sam Altman."},
+        {"role": "user", "content": "Lấy 7 tweet nhé."},
+        {"role": "user", "content": "Đúng, chỉ của Sam Altman."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {"name": "timeline", "args": {"screenname": "sama", "limit": 7}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Preserves the mapped account handle and applies a later numeric limit."}
+    },
+    {
+      "id": "G08_multiturn_missing_url",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt bài báo này giúp mình."},
+        {"role": "user", "content": "Mình chưa có link."},
+        {"role": "user", "content": "Bạn cần gì để đọc bài đó?"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {"name": "clarify", "args": {"response_type": "text"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Does not guess an article URL after the user explicitly says none is available."}
+    },
+    {
+      "id": "G09_multiturn_cancel_send",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Gửi bản tin này lên Telegram."},
+        {"role": "user", "content": "Khoan, chưa gửi nữa."},
+        {"role": "user", "content": "Chỉ cho mình biết bạn cần xác nhận gì."}
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true, "behavior": "answer_without_tool"},
+      "metadata": {"what_it_tests": "Honors cancellation and explains the confirmation requirement without calling send or clarify."}
+    },
+    {
+      "id": "G10_multiturn_switch_to_social_top",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tin tức OpenAI hôm nay trên web."},
+        {"role": "user", "content": "Thay vào đó, xem mọi người nói gì trên Twitter."},
+        {"role": "user", "content": "Chỉ lấy các tweet top về OpenAI."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "social_search", "args": {"query": "OpenAI", "search_type": "Top"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Switches from web news to social search while retaining the topic and applying Top ordering."}
+    }
+  ]
 }
