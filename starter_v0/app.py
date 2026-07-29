@@ -38,7 +38,7 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("---")
-    st.markdown("**Hướng dẫn:**\n- Nhập `/exit` hoặc `/quit` để kết thúc (hoặc bấm Reset).\n- UI hiển thị chi tiết các lần gọi Tool trong từng Expanders 🔧.")
+    st.markdown("**Hướng dẫn:**\n- Nhập `/exit` hoặc `/quit` để kết thúc (hoặc bấm Reset).\n- Đổ Model cần Reset chat lại trước.\n- UI hiển thị chi tiết các lần gọi Tool trong từng Expanders 🔧.")
 
 # --- 2. KHỞI TẠO SESSION STATE ---
 if "history" not in st.session_state:
