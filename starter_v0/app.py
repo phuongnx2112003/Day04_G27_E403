@@ -10,8 +10,7 @@ from chat import (
     write_transcript,
     now_iso,
     safe_slug,
-    ARTIFACTS_DIR
-    TRANSCRIPTS_DIR
+    ARTIFACTS_DIR,
 )
 from env_loader import load_lab_env
 from providers import make_provider
@@ -20,14 +19,16 @@ from versioning import build_artifact_version, artifact_version_dict
 
 # Khởi tạo môi trường (nạp .env)
 ROOT = Path(__file__).parent
+TRANSCRIPTS_DIR = ROOT / "transcripts"
 load_lab_env(ROOT)
 
-# st.set_page_config(page_title="Research Agent UI", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="Research Agent UI", page_icon="🤖", layout="wide")
 
 # --- 1. GIAO DIỆN SIDEBAR (CẤU HÌNH) ---
 with st.sidebar:
     st.header("⚙️ Cấu hình Model")
     provider_name = st.selectbox("Provider", ["openrouter", "openai", "anthropic", "gemini"])
+    model_name = st.text_input("Model (tuỳ chọn)", value="")
     version_label = st.text_input("Version Label", value="v0")
     max_tool_rounds = st.number_input("Max Tool Rounds", min_value=1, max_value=10, value=4)
     history_window = st.number_input("History Window (số cặp User/Agent)", min_value=1, max_value=20, value=5)
@@ -75,6 +76,21 @@ if "history" not in st.session_state:
 st.title("🤖 Trợ lý AI (Research Agent)")
 # st.caption(f"Artifact Version: `{st.session_state.transcript['artifact_version']}` | Ghi log tại: `{st.session_state.transcript_path.name}`")
 
+DEMO_PROMPTS = [
+    ("📰 Tin AI hôm nay", "Tin AI hôm nay có gì nổi bật?"),
+    ("👤 Tweet của Sam Altman", "Lấy 5 tweet mới nhất của Sam Altman."),
+    ("🌐 Web + mạng xã hội", "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI."),
+    ("🔗 Đọc một URL", "Tóm tắt bài này giúp mình: https://openai.com/news/"),
+    ("❓ Demo hỏi lại", "Tóm tắt 5 tweet mới nhất giúp mình."),
+]
+
+selected_demo_prompt = None
+with st.expander("💡 Câu hỏi gợi ý để demo", expanded=True):
+    st.caption("Các kịch bản này lần lượt minh hoạ lookup, timeline, gọi nhiều tool, fetch URL và clarify.")
+    for index, (label, prompt) in enumerate(DEMO_PROMPTS):
+        if st.button(label, key=f"demo_prompt_{index}", use_container_width=True):
+            selected_demo_prompt = prompt
+
 # --- 3. HIỂN THỊ LỊCH SỬ CHAT VÀ TOOL TRACES ---
 for msg in st.session_state.history:
     with st.chat_message(msg["role"]):
@@ -93,7 +109,9 @@ for msg in st.session_state.history:
                             st.json(tool_res.get("result", {}))
 
 # --- 4. XỬ LÝ KHI NGƯỜI DÙNG NHẬP TIN NHẮN ---
-if user_text := st.chat_input("Nhập câu hỏi hoặc yêu cầu của bạn..."):
+typed_prompt = st.chat_input("Nhập câu hỏi hoặc yêu cầu của bạn...")
+user_text = selected_demo_prompt or typed_prompt
+if user_text:
     if user_text.strip() in {"/exit", "/quit"}:
         st.warning("Chat kết thúc. Hãy bấm 'Reset Chat' ở sidebar để bắt đầu lại.")
         st.stop()
@@ -129,6 +147,47 @@ if user_text := st.chat_input("Nhập câu hỏi hoặc yêu cầu của bạn..
 
     # Hiển thị Assistant xử lý
     with st.chat_message("assistant"):
+        live_status = st.status("Agent đang phân tích yêu cầu...", expanded=True)
+        live_trace = st.empty()
+        live_events = []
+
+        def render_live_trace() -> None:
+            is_complete = any(event["type"] == "finished" for event in live_events)
+            with live_trace.container():
+                for event in live_events:
+                    if event["type"] == "tool_calls":
+                        calls = event["tool_calls"]
+                        if calls:
+                            st.write(f"**Round {event['round']}:** chọn {len(calls)} tool")
+                        else:
+                            st.write(f"**Round {event['round']}:** không cần tool")
+                    elif event["type"] == "tool_started":
+                        st.info(f"Đang gọi `{event['tool']}` với arguments bên dưới.")
+                        st.json(event["args"])
+                    elif event["type"] == "tool_result":
+                        tool_event = event["event"]
+                        with st.expander(
+                            f"✅ Kết quả `{tool_event['tool']}` (Round {event['round']})",
+                            expanded=not is_complete,
+                        ):
+                            st.write("**Args:**")
+                            st.json(tool_event.get("args", {}))
+                            st.write("**Result:**")
+                            st.json(tool_event.get("result", {}))
+
+        def on_agent_event(event: dict) -> None:
+            live_events.append(event)
+            if event["type"] == "tool_calls":
+                count = len(event["tool_calls"])
+                live_status.update(label=f"Round {event['round']}: model chọn {count} tool...", state="running")
+            elif event["type"] == "tool_started":
+                live_status.update(label=f"Round {event['round']}: đang chạy {event['tool']}...", state="running")
+            elif event["type"] == "tool_result":
+                live_status.update(label=f"Round {event['round']}: {event['event']['tool']} đã trả kết quả", state="running")
+            elif event["type"] == "finished":
+                live_status.update(label="Agent đã hoàn tất", state="complete")
+            render_live_trace()
+
         with st.spinner("Agent đang suy nghĩ và chạy công cụ..."):
             try:
                 # Chạy nguyên bản vòng lặp logic (giống hệt chat.py)
@@ -138,6 +197,7 @@ if user_text := st.chat_input("Nhập câu hỏi hoặc yêu cầu của bạn..
                     tools=st.session_state.openai_tools,
                     model=selected_model,
                     max_tool_rounds=max_tool_rounds,
+                    on_event=on_agent_event,
                 )
                 
                 turn_record.update(result)
@@ -171,6 +231,7 @@ if user_text := st.chat_input("Nhập câu hỏi hoặc yêu cầu của bạn..
 
             except Exception as exc:
                 error_msg = f"{type(exc).__name__}: {str(exc)}"
+                live_status.update(label="Agent gặp lỗi", state="error")
                 st.error(f"Lỗi: {error_msg}")
                 turn_record.update({
                     "status": "provider_error",

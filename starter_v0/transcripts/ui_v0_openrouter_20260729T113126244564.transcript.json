@@ -1,0 +1,27 @@
+{
+  "transcript_id": "v0_openrouter_20260729T113126244564",
+  "version": "v0",
+  "artifact_version": "v0+pd7d2cb19db12+t959dd2039928",
+  "prompt_hash": "d7d2cb19db12586daf694a844fef7f8b29e2f8acb6648f26e954fd45453acce8",
+  "tools_hash": "959dd203992866971f1599935da1bc0eadb85dbc59ae0aefcc872940aa8d26c6",
+  "provider": "openrouter",
+  "system_prompt": "/home/x-phuong/Code/VinUni/Day04-2A202601874-NguyenXuanPhuong/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/x-phuong/Code/VinUni/Day04-2A202601874-NguyenXuanPhuong/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:31:26",
+  "updated_at": "2026-07-29T11:31:29",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:31:29",
+      "user": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "TypeError: run_model_tool_loop() got an unexpected keyword argument 'on_event'",
+      "ended_at": "2026-07-29T11:31:29"
+    }
+  ]
+}
