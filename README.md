@@ -1,5 +1,18 @@
 # Day 04 Lab v2 — Research Agent Tool Eval
 
+# Thành viên nhóm 
+
+| Họ và tên | Role | MSSV | Nhóm | Email |
+|---|---|---|---|---|
+| Nguyễn Đào Nam Hải | Thành viên | 2A202601037 | G27 | namhai23092005@gmail.com |
+| Phùng Hồng Phước | Thành viên | 2A202601215 | G27 | phunghongphuoc178@gmail.com |
+| Lê Công Dũng | Thành viên | 2A202601649 | G27 | ledung20053001@gmail.com |
+| Trần Đức Mạnh | Thành viên | 2A202601567 | G27 | ducmanhhb2005@gmail.com |
+| Nguyễn Xuân Phượng | Thành viên | 2A202601874 | G27 | phuong0961070156@gmail.com |
+| Lê Nguyễn Minh Đức | Thành viên | 2A202601013 | G27 | ducminh5404@gmail.com |
+
+
+
 ## Brief
 
 Trong lab này, nhóm build một research agent nhỏ nhưng chạy thật. Agent nhận request của user, chọn tool, truyền arguments, chạy tool thật, lưu full JSON log, rồi dùng log đó để tối ưu prompt/tool declaration qua nhiều version.
