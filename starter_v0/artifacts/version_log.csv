@@ -1,1 +1,2 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
+v0,MinhDuc,system_prompt.md,v0+peb1c8179815b+t6cdb53d5d7b8,peb1c8179815b,t6cdb53d5d7b8,baseline,baseline run with trap prompt,case_accuracy,0.70,0.70,runs/v0_B_base_openai_20260729T102018444825.json
