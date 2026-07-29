@@ -1,0 +1,167 @@
+{
+  "transcript_id": "v1_gemini_20260729T110715764064",
+  "version": "v1",
+  "artifact_version": "v1+p5fbd73f8dd06+t6cdb53d5d7b8",
+  "prompt_hash": "5fbd73f8dd0612a37d6d5a467ec617e2b7a50c51aaff88a3f7a74fe0c875c974",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "gemini",
+  "model": null,
+  "system_prompt": "D:\\DATA\\Visual\\Day04_G27_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\DATA\\Visual\\Day04_G27_E403\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:07:15",
+  "updated_at": "2026-07-29T11:10:07",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:07:18",
+      "user": "hello ",
+      "status": "answered",
+      "assistant_text": "Xin chào! Tôi là Trợ lý Nghiên cứu AI. Tôi có thể giúp bạn tìm kiếm thông tin trên internet, tra cứu các bài báo khoa học, tìm kiếm bài đăng trên mạng xã hội (X/Twitter), tóm tắt nội dung trang web hoặc cập nhật tin tức mới nhất. \n\nHôm nay tôi có thể hỗ trợ gì cho bạn?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Xin chào! Tôi là Trợ lý Nghiên cứu AI. Tôi có thể giúp bạn tìm kiếm thông tin trên internet, tra cứu các bài báo khoa học, tìm kiếm bài đăng trên mạng xã hội (X/Twitter), tóm tắt nội dung trang web hoặc cập nhật tin tức mới nhất. \n\nHôm nay tôi có thể hỗ trợ gì cho bạn?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T11:07:27"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T11:09:46",
+      "user": "cho tôi thông tin về khóa học AI thực chiến của VIN",
+      "status": "answered",
+      "assistant_text": "Chương trình **\"Đào tạo Nhân tài AI Thực chiến\"** là một dự án đặc biệt của Tập đoàn Vingroup phối hợp cùng Trường Đại học VinUni triển khai, nhằm mục tiêu đào tạo 20.000 nhân lực AI \"làm được việc\" cho xã hội. \n\nDưới đây là các thông tin chi tiết về khóa học này:\n\n### 1. Tổng quan chương trình\n* **Mô hình đào tạo:** Tinh gọn, tốc độ cao trong **12 tuần** (toàn thời gian).\n* **Mô hình học tập (3+3+6):**\n  * **3 tuần học nền tảng:** Học về tư duy AI, đạo đức AI, kỹ năng AI, giải quyết vấn đề bằng trợ lý AI... dưới sự hướng dẫn của giảng viên VinUni.\n  * **3 tuần mô phỏng thực chiến:** Học viên trực tiếp xây dựng, thử nghiệm và hoàn thiện sản phẩm trong môi trường giả lập.\n  * **6 tuần làm việc trực tiếp tại doanh nghiệp:** Thực hành với các dự án AI thực tế của Vingroup và các đối tác.\n* **Phân loại cấp độ:**\n  * **Khóa Cơ bản:** Dành cho nhân viên tác nghiệp AI.\n  * **Khóa Nâng cao:** Dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên sâu.\n\n### 2. Nội dung đào tạo & Phương pháp học\n* **Nội dung cốt lõi:** Tập trung vào 3 nhóm năng lực:\n  1. Tư duy sản phẩm gắn với bài toán kinh doanh.\n  2. Xây dựng hạ tầng kỹ thuật.\n  3. Phát triển ứng dụng AI (đặc biệt là mô hình **AI Agent**).\n* **Phương pháp \"Vibe Coding\":** Học viên thực hành sử dụng các công cụ AI hiện đại như *Cursor, Claude Code, Copilot* để tăng tốc độ phát triển sản phẩm.\n* **Cường độ học tập cao:** Lịch học kéo dài từ sáng đến tối (Sáng học lý thuyết, chiều thực hành Lab/Vibe Coding, tối và cuối tuần tham gia Build/Hackathon).\n* **Chuẩn đầu ra:** Thiết kế theo khung năng lực quốc tế **SFIA** (Skills Framework for the Information Age).\n\n### 3. Quyền lợi đặc biệt của học viên\n* **Học phí:** Được **miễn phí 100%** học phí.\n* **Hỗ trợ tài chính:** Nhận phụ cấp **8.000.000 VND/tháng** trong suốt thời gian tham gia chương trình.\n* **Đồng hành:** Được dẫn dắt trực tiếp bởi đội ngũ huấn luyện viên là các quản lý dự án AI thực tế từ Vingroup và các doanh nghiệp đối tác.\n* **Cơ hội nghề nghiệp:** Cơ hội việc làm với mức lương hấp dẫn tỷ lệ thuận với năng lực thực chiến sau khi tốt nghiệp.\n\n*(Nguồn tham khảo chi tiết từ Cổng thông tin [Vingroup](https://vingroup.net/tin-tuc-su-kien/bai-viet/5867/vingroup-khai-giang-khoa-dau-tien-chuong-trinh-dao-tao-20000-nhan-tai-ai-thuc-chien) và [VinUni](https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban))*",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "khóa học AI thực chiến VIN",
+                "timeframe": "year"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "khóa học AI thực chiến VIN",
+                "timeframe": "year"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "khóa học AI thực chiến VIN",
+                "topic": "general",
+                "timeframe": "year",
+                "items": [
+                  {
+                    "title": "VINGROUP KHAI GIẢNG KHÓA ĐẦU TIÊN CHƯƠNG TRÌNH ĐÀO TẠO 20.000 NHÂN TÀI AI THỰC CHIẾN",
+                    "url": "https://vingroup.net/tin-tuc-su-kien/bai-viet/5867/vingroup-khai-giang-khoa-dau-tien-chuong-trinh-dao-tao-20000-nhan-tai-ai-thuc-chien",
+                    "source": "vingroup.net",
+                    "summary": "Xuyên suốt chương trình, học viên được đào tạo để phát triển và triển khai các giải pháp AI trong doanh nghiệp, trong đó có mô hình AI Agent. Nội dung tập trung vào ba nhóm năng lực cốt lõi: tư duy sản phẩm gắn với bài toán kinh doanh; xây dựng hạ tầng kỹ thuật; và phát triển ứng dụng AI. Học viên cũng thực hành theo phương pháp “Vibe Coding”, sử dụng các công cụ hiện đại như Cursor, Claude Code, Copilot nhằm tăng tốc phát triển sản phẩm. [...] Chương trình được thiết kế trong 12 tuần toàn thời gian theo mô hình 3+3+6, gồm: 3 tuần học nền tảng, 3 tuần mô phỏng thực chiến và 6 tuần làm việc trực tiếp tại doanh nghiệp. Sau giai đoạn nền tảng, học viên được chia vào 3 hướng đào tạo chuyên sâu: sản phẩm AI (AI Products); hạ tầng AI (AI Infrastructure) và ứng dụng AI (AI Applications). [...] Ở giai đoạn đầu, học viên tham gia đào tạo cường độ cao với lịch học kéo dài từ sáng đến tối. Cụ thể, các buổi sáng học lý thuyết, buổi chiều thực hành “Vibe Coding” và Lab; buổi tối và cuối tuần dành cho “Build/Hackathon”.\n\nGiai đoạn tiếp theo tập trung mô phỏng môi trường thực chiến, nơi học viên trực tiếp xây dựng, thử nghiệm và hoàn thiện sản phẩm.",
+                    "score": 0.8861155
+                  },
+                  {
+                    "title": "Thông tin Tuyển sinh Chương trình Đào tạo Nhân tài AI Thực chiến - Khóa cơ bản - VinUni",
+                    "url": "https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban",
+                    "source": "vinuni.edu.vn",
+                    "summary": "Chương trình Al Thực Chiến là chương trình đặc biệt của Tập đoàn Vingroup do Trường Đại học VinUni phối hợp triển khai nhằm đào tạo nguồn nhn lực AI “làm được việc” cho xã hội thông qua mô hình đào tạo tinh gọn, tốc độ trong 12 tuần; cùng cơ hội việc làm với mức lương đặc biệt hấp dẫn tỷ lệ thuận với năng lực thực chiến.\n\nChương trình có hai mức độ: (1) Cơ bản dành cho nhn viên tác nghiệp AI và (2) Nng cao dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên su. [...] 3. Học viên có 9 tuần thực chiến với dự án AI thật, được đội ngũ huấn luyện viên là quản lý dự án AI của Vingroup và các doanh nghiệp đối tác kèm cặp.\n4. Học viên được miễn học phí và nhận phụ cấp 8 triệu VND/tháng trong suốt thời gian tham gia chương trình. [...] 1. Chương trình thiết kế theo khung năng lực SFIA (Chuẩn năng lực kỷ nguyên thông tin – Skills Framework for the Information Age). SFIA công bố đã có hơn 12.000 người dùng doanh nghiệp từ 170 quốc gia.\n2. Học viên có 3 tuần thực học về tư duy AI, đạo đức Al, kỹ năng AI, giải quyết vấn đề bằng trợ lý Al… với sự hướng dẫn của giảng viên cơ hữu và liên kết của VinUni.",
+                    "score": 0.8755427
+                  },
+                  {
+                    "title": "THÔNG TIN TUYỂN SINH CHƯƠNG TRÌNH ĐÀO TẠO ...",
+                    "url": "https://www.facebook.com/vinuniversity/photos/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh-ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%C3%A0o-t%E1%BA%A1o-nh%C3%A2n-t%C3%A0i-ai-th%E1%BB%B1c-chi%E1%BA%BFn-kh%C3%B3a-c%C6%A1-b%E1%BA%A3nch%C6%B0%C6%A1/1326645062841749",
+                    "source": "facebook.com",
+                    "summary": "Học viên có 9 tuần thực chiến với dự án AI thật, được đội ngũ huấn luyện viên là quản lý dự án AI của Vingroup và các doanh nghiệp đối tác kèm cặp. 4. Học",
+                    "score": 0.8047902
+                  },
+                  {
+                    "title": "Khóa Học AI thực chiến dành cho nhân viên văn phòng",
+                    "url": "https://weupbook.vn/vn/course/course-khoa-hoc-ai-thuc-chien-danh-cho-nhan-vien-van-phong-crs-000005",
+                    "source": "weupbook.vn",
+                    "summary": "Khóa học bao gồm:- 9 video bài giảng ngắn, tổng 128 phút, xem nhanh, áp dụng ngay trong ngày.- Bài tập thực hành theo từng bài, bám sát tình huống công việc",
+                    "score": 0.7402687
+                  },
+                  {
+                    "title": "Xếp hạng độ khó các phần trong đề thi thực chiến AI của ...",
+                    "url": "https://www.threads.com/@nktung.218.py/post/DVn2pv3oBTC/x%E1%BA%BFp-h%E1%BA%A1ng-%C4%91%E1%BB%99-kh%C3%B3-c%C3%A1c-ph%E1%BA%A7n-trong-%C4%91%E1%BB%81-thi-th%E1%BB%B1c-chi%E1%BA%BFn-ai-c%E1%BB%A7a-vin-1-to%C3%A1n-h%E1%BB%8Dc-t%C6%B0-duy-%C4%91%E1%BB%8B?hl=en",
+                    "source": "threads.com",
+                    "summary": "Xếp hạng độ khó các phần trong đề thi thực chiến AI của Vin. Kỹ thuật lập trình & xử lý dữ liệu: 8/10. AI đang khiến việc học trở nên dễ dàng",
+                    "score": 0.47782278
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Chương trình **\"Đào tạo Nhân tài AI Thực chiến\"** là một dự án đặc biệt của Tập đoàn Vingroup phối hợp cùng Trường Đại học VinUni triển khai, nhằm mục tiêu đào tạo 20.000 nhân lực AI \"làm được việc\" cho xã hội. \n\nDưới đây là các thông tin chi tiết về khóa học này:\n\n### 1. Tổng quan chương trình\n* **Mô hình đào tạo:** Tinh gọn, tốc độ cao trong **12 tuần** (toàn thời gian).\n* **Mô hình học tập (3+3+6):**\n  * **3 tuần học nền tảng:** Học về tư duy AI, đạo đức AI, kỹ năng AI, giải quyết vấn đề bằng trợ lý AI... dưới sự hướng dẫn của giảng viên VinUni.\n  * **3 tuần mô phỏng thực chiến:** Học viên trực tiếp xây dựng, thử nghiệm và hoàn thiện sản phẩm trong môi trường giả lập.\n  * **6 tuần làm việc trực tiếp tại doanh nghiệp:** Thực hành với các dự án AI thực tế của Vingroup và các đối tác.\n* **Phân loại cấp độ:**\n  * **Khóa Cơ bản:** Dành cho nhân viên tác nghiệp AI.\n  * **Khóa Nâng cao:** Dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên sâu.\n\n### 2. Nội dung đào tạo & Phương pháp học\n* **Nội dung cốt lõi:** Tập trung vào 3 nhóm năng lực:\n  1. Tư duy sản phẩm gắn với bài toán kinh doanh.\n  2. Xây dựng hạ tầng kỹ thuật.\n  3. Phát triển ứng dụng AI (đặc biệt là mô hình **AI Agent**).\n* **Phương pháp \"Vibe Coding\":** Học viên thực hành sử dụng các công cụ AI hiện đại như *Cursor, Claude Code, Copilot* để tăng tốc độ phát triển sản phẩm.\n* **Cường độ học tập cao:** Lịch học kéo dài từ sáng đến tối (Sáng học lý thuyết, chiều thực hành Lab/Vibe Coding, tối và cuối tuần tham gia Build/Hackathon).\n* **Chuẩn đầu ra:** Thiết kế theo khung năng lực quốc tế **SFIA** (Skills Framework for the Information Age).\n\n### 3. Quyền lợi đặc biệt của học viên\n* **Học phí:** Được **miễn phí 100%** học phí.\n* **Hỗ trợ tài chính:** Nhận phụ cấp **8.000.000 VND/tháng** trong suốt thời gian tham gia chương trình.\n* **Đồng hành:** Được dẫn dắt trực tiếp bởi đội ngũ huấn luyện viên là các quản lý dự án AI thực tế từ Vingroup và các doanh nghiệp đối tác.\n* **Cơ hội nghề nghiệp:** Cơ hội việc làm với mức lương hấp dẫn tỷ lệ thuận với năng lực thực chiến sau khi tốt nghiệp.\n\n*(Nguồn tham khảo chi tiết từ Cổng thông tin [Vingroup](https://vingroup.net/tin-tuc-su-kien/bai-viet/5867/vingroup-khai-giang-khoa-dau-tien-chuong-trinh-dao-tao-20000-nhan-tai-ai-thuc-chien) và [VinUni](https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban))*",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "khóa học AI thực chiến VIN",
+            "timeframe": "year"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "khóa học AI thực chiến VIN",
+            "topic": "general",
+            "timeframe": "year",
+            "items": [
+              {
+                "title": "VINGROUP KHAI GIẢNG KHÓA ĐẦU TIÊN CHƯƠNG TRÌNH ĐÀO TẠO 20.000 NHÂN TÀI AI THỰC CHIẾN",
+                "url": "https://vingroup.net/tin-tuc-su-kien/bai-viet/5867/vingroup-khai-giang-khoa-dau-tien-chuong-trinh-dao-tao-20000-nhan-tai-ai-thuc-chien",
+                "source": "vingroup.net",
+                "summary": "Xuyên suốt chương trình, học viên được đào tạo để phát triển và triển khai các giải pháp AI trong doanh nghiệp, trong đó có mô hình AI Agent. Nội dung tập trung vào ba nhóm năng lực cốt lõi: tư duy sản phẩm gắn với bài toán kinh doanh; xây dựng hạ tầng kỹ thuật; và phát triển ứng dụng AI. Học viên cũng thực hành theo phương pháp “Vibe Coding”, sử dụng các công cụ hiện đại như Cursor, Claude Code, Copilot nhằm tăng tốc phát triển sản phẩm. [...] Chương trình được thiết kế trong 12 tuần toàn thời gian theo mô hình 3+3+6, gồm: 3 tuần học nền tảng, 3 tuần mô phỏng thực chiến và 6 tuần làm việc trực tiếp tại doanh nghiệp. Sau giai đoạn nền tảng, học viên được chia vào 3 hướng đào tạo chuyên sâu: sản phẩm AI (AI Products); hạ tầng AI (AI Infrastructure) và ứng dụng AI (AI Applications). [...] Ở giai đoạn đầu, học viên tham gia đào tạo cường độ cao với lịch học kéo dài từ sáng đến tối. Cụ thể, các buổi sáng học lý thuyết, buổi chiều thực hành “Vibe Coding” và Lab; buổi tối và cuối tuần dành cho “Build/Hackathon”.\n\nGiai đoạn tiếp theo tập trung mô phỏng môi trường thực chiến, nơi học viên trực tiếp xây dựng, thử nghiệm và hoàn thiện sản phẩm.",
+                "score": 0.8861155
+              },
+              {
+                "title": "Thông tin Tuyển sinh Chương trình Đào tạo Nhân tài AI Thực chiến - Khóa cơ bản - VinUni",
+                "url": "https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban",
+                "source": "vinuni.edu.vn",
+                "summary": "Chương trình Al Thực Chiến là chương trình đặc biệt của Tập đoàn Vingroup do Trường Đại học VinUni phối hợp triển khai nhằm đào tạo nguồn nhn lực AI “làm được việc” cho xã hội thông qua mô hình đào tạo tinh gọn, tốc độ trong 12 tuần; cùng cơ hội việc làm với mức lương đặc biệt hấp dẫn tỷ lệ thuận với năng lực thực chiến.\n\nChương trình có hai mức độ: (1) Cơ bản dành cho nhn viên tác nghiệp AI và (2) Nng cao dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên su. [...] 3. Học viên có 9 tuần thực chiến với dự án AI thật, được đội ngũ huấn luyện viên là quản lý dự án AI của Vingroup và các doanh nghiệp đối tác kèm cặp.\n4. Học viên được miễn học phí và nhận phụ cấp 8 triệu VND/tháng trong suốt thời gian tham gia chương trình. [...] 1. Chương trình thiết kế theo khung năng lực SFIA (Chuẩn năng lực kỷ nguyên thông tin – Skills Framework for the Information Age). SFIA công bố đã có hơn 12.000 người dùng doanh nghiệp từ 170 quốc gia.\n2. Học viên có 3 tuần thực học về tư duy AI, đạo đức Al, kỹ năng AI, giải quyết vấn đề bằng trợ lý Al… với sự hướng dẫn của giảng viên cơ hữu và liên kết của VinUni.",
+                "score": 0.8755427
+              },
+              {
+                "title": "THÔNG TIN TUYỂN SINH CHƯƠNG TRÌNH ĐÀO TẠO ...",
+                "url": "https://www.facebook.com/vinuniversity/photos/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh-ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%C3%A0o-t%E1%BA%A1o-nh%C3%A2n-t%C3%A0i-ai-th%E1%BB%B1c-chi%E1%BA%BFn-kh%C3%B3a-c%C6%A1-b%E1%BA%A3nch%C6%B0%C6%A1/1326645062841749",
+                "source": "facebook.com",
+                "summary": "Học viên có 9 tuần thực chiến với dự án AI thật, được đội ngũ huấn luyện viên là quản lý dự án AI của Vingroup và các doanh nghiệp đối tác kèm cặp. 4. Học",
+                "score": 0.8047902
+              },
+              {
+                "title": "Khóa Học AI thực chiến dành cho nhân viên văn phòng",
+                "url": "https://weupbook.vn/vn/course/course-khoa-hoc-ai-thuc-chien-danh-cho-nhan-vien-van-phong-crs-000005",
+                "source": "weupbook.vn",
+                "summary": "Khóa học bao gồm:- 9 video bài giảng ngắn, tổng 128 phút, xem nhanh, áp dụng ngay trong ngày.- Bài tập thực hành theo từng bài, bám sát tình huống công việc",
+                "score": 0.7402687
+              },
+              {
+                "title": "Xếp hạng độ khó các phần trong đề thi thực chiến AI của ...",
+                "url": "https://www.threads.com/@nktung.218.py/post/DVn2pv3oBTC/x%E1%BA%BFp-h%E1%BA%A1ng-%C4%91%E1%BB%99-kh%C3%B3-c%C3%A1c-ph%E1%BA%A7n-trong-%C4%91%E1%BB%81-thi-th%E1%BB%B1c-chi%E1%BA%BFn-ai-c%E1%BB%A7a-vin-1-to%C3%A1n-h%E1%BB%8Dc-t%C6%B0-duy-%C4%91%E1%BB%8B?hl=en",
+                "source": "threads.com",
+                "summary": "Xếp hạng độ khó các phần trong đề thi thực chiến AI của Vin. Kỹ thuật lập trình & xử lý dữ liệu: 8/10. AI đang khiến việc học trở nên dễ dàng",
+                "score": 0.47782278
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T11:10:07"
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "transcript_id": "v0_gemini_20260729T110751024944",
+  "version": "v0",
+  "artifact_version": "v0+p5fbd73f8dd06+t6cdb53d5d7b8",
+  "prompt_hash": "5fbd73f8dd0612a37d6d5a467ec617e2b7a50c51aaff88a3f7a74fe0c875c974",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "gemini",
+  "model": null,
+  "system_prompt": "D:\\DATA\\Visual\\Day04_G27_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\DATA\\Visual\\Day04_G27_E403\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:07:51",
+  "updated_at": "2026-07-29T11:10:08",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:07:53",
+      "user": "hello ",
+      "status": "answered",
+      "assistant_text": "Xin chào! Tôi là Trợ lý Nghiên cứu AI. Tôi có thể giúp bạn tìm kiếm thông tin trên internet, tra cứu các bài báo khoa học, tìm kiếm bài đăng trên mạng xã hội (như Twitter/X), tóm tắt nội dung trang web, hoặc cập nhật tin tức mới nhất. \n\nHôm nay tôi có thể hỗ trợ gì cho bạn?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Xin chào! Tôi là Trợ lý Nghiên cứu AI. Tôi có thể giúp bạn tìm kiếm thông tin trên internet, tra cứu các bài báo khoa học, tìm kiếm bài đăng trên mạng xã hội (như Twitter/X), tóm tắt nội dung trang web, hoặc cập nhật tin tức mới nhất. \n\nHôm nay tôi có thể hỗ trợ gì cho bạn?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T11:08:01"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T11:09:48",
+      "user": "cho tôi thông tin về khóa học AI thực chiến của VIN",
+      "status": "answered",
+      "assistant_text": "Chương trình **\"Đào tạo Nhân tài AI Thực chiến\" (Applied AI Talent Program)** là một dự án đặc biệt của **Tập đoàn Vingroup** phối hợp cùng **Trường Đại học VinUni** triển khai. Mục tiêu của chương trình là đào tạo nguồn nhân lực AI \"làm được việc\" cho xã hội thông qua mô hình đào tạo tinh gọn và tốc độ.\n\nDưới đây là các thông tin chi tiết về khóa học này:\n\n### 1. Cấu trúc chương trình & Thời gian đào tạo\n*   **Thời gian học:** **12 tuần** (tốc độ và tinh gọn).\n*   **Mô hình thực chiến:** Học viên có **9 tuần thực chiến** trực tiếp với các dự án AI thực tế, dưới sự kèm cặp và hướng dẫn sát sao từ đội ngũ huấn luyện viên là các quản lý dự án AI của Vingroup và các doanh nghiệp đối tác.\n*   **Phân cấp đào tạo:** Chương trình được chia làm 2 mức độ:\n    1.  **Khóa Cơ bản:** Dành cho nhân viên tác nghiệp AI.\n    2.  **Khóa Nâng cao:** Dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên sâu.\n\n### 2. Quyền lợi đặc biệt dành cho học viên\n*   **Học phí:** Được **miễn phí 100%** học phí.\n*   **Trợ cấp:** Nhận phụ cấp **8.000.000 VND/tháng** trong suốt thời gian tham gia khóa học.\n*   **Chứng chỉ:** Nhận chứng chỉ đào tạo uy tín do Trường Đại học VinUni và Tập đoàn Vingroup đồng cấp.\n*   **Cơ hội việc làm:** Sau khi tốt nghiệp, học viên có cơ hội được tuyển dụng trực tiếp vào các công ty thuộc Tập đoàn Vingroup với mức lương cam kết hấp dẫn theo năng lực thực chiến:\n    *   *Năng lực xuất sắc:* **30 - 50 triệu VND/tháng**.\n    *   *Năng lực tốt:* **20 - 30 triệu VND/tháng**.\n    *   *Năng lực khá:* **15 - 20 triệu VND/tháng**.\n\n### 3. Thông tin tuyển sinh\n*   **Mục tiêu dài hạn:** Vingroup hướng tới đào tạo **20.000 nhân tài AI thực chiến**.\n*   **Thời gian tuyển sinh khóa đầu tiên:** Diễn ra từ ngày **01/02 đến 10/02/2026**. \n*   Hiện tại chương trình đã và đang tiếp tục mở các đợt tuyển sinh tiếp theo (như Intake 2, Intake 3).\n\n*(Nguồn tham khảo chi tiết tại website chính thức của [VinUni](https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban) và [Vingroup](https://vingroup.net/tin-tuc-su-kien/bai-viet/3800/vingroup-dao-tao-20000-nhan-tai-ai-thuc-chien-phu-cap-8-trieu-dongthang))*",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "timeframe": "year",
+                "query": "khóa học AI thực chiến VinAI Vingroup",
+                "topic": "general"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "timeframe": "year",
+                "query": "khóa học AI thực chiến VinAI Vingroup",
+                "topic": "general"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "khóa học AI thực chiến VinAI Vingroup",
+                "topic": "general",
+                "timeframe": "year",
+                "items": [
+                  {
+                    "title": "Thông tin Tuyển sinh Chương trình Đào tạo Nhân tài AI ...",
+                    "url": "https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban",
+                    "source": "vinuni.edu.vn",
+                    "summary": "Chương trình Al Thực Chiến là chương trình đặc biệt của Tập đoàn Vingroup do Trường Đại học VinUni phối hợp triển khai nhằm đào tạo nguồn nhn lực AI “làm được việc” cho xã hội thông qua mô hình đào tạo tinh gọn, tốc độ trong 12 tuần; cùng cơ hội việc làm với mức lương đặc biệt hấp dẫn tỷ lệ thuận với năng lực thực chiến.\n\nChương trình có hai mức độ: (1) Cơ bản dành cho nhn viên tác nghiệp AI và (2) Nng cao dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên su. [...] 3. Học viên có 9 tuần thực chiến với dự án AI thật, được đội ngũ huấn luyện viên là quản lý dự án AI của Vingroup và các doanh nghiệp đối tác kèm cặp.\n4. Học viên được miễn học phí và nhận phụ cấp 8 triệu VND/tháng trong suốt thời gian tham gia chương trình. [...] 5. Học viên tốt nghiệp có cơ hội được tuyển dụng vào các công ty của Vingroup với mức lương đặc biệt hấp dẫn, phụ thuộc vào năng lực thực chiến. Năng lực xuất sắc: 30-50 triệu VND/tháng; Năng lực tốt: 20-30 triệu VND/tháng; Năng lực khá: 15-20 triệu VND/tháng.\n6. Chứng chỉ đào tạo do Trường Đại học VinUni và Tập đoàn Vingroup đồng cấp, danh giá và uy tín.",
+                    "score": 0.8252664
+                  },
+                  {
+                    "title": "VINGROUP ĐÀO TẠO 20.000 NHÂN TÀI AI THỰC CHIẾN",
+                    "url": "https://vingroup.net/tin-tuc-su-kien/bai-viet/3800/vingroup-dao-tao-20000-nhan-tai-ai-thuc-chien-phu-cap-8-trieu-dongthang",
+                    "source": "vingroup.net",
+                    "summary": "Jan 28, 2026 — Chương trình đào tạo nhân viên và nhân tài AI của Tập đoàn Vingroup sẽ chính thức tuyển sinh khóa đầu tiên từ ngày 01/02 đến 10/02/2026 tại Đại học VinUni và ...Read more",
+                    "score": 0.79099923
+                  },
+                  {
+                    "title": "CHƯƠNG TRÌNH ĐÀO TẠO NHÂN TÀI AI THỰC CHIẾN ( ...",
+                    "url": "https://www.facebook.com/vinuniversity/posts/th%C3%B4ng-b%C3%A1o-k%E1%BA%BFt-qu%E1%BA%A3-v%C3%B2ng-h%E1%BB%93-s%C6%A1-%C4%91%E1%BB%A3t-1-ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%C3%A0o-t%E1%BA%A1o-nh%C3%A2n-t%C3%A0i-ai-th%E1%BB%B1c-chi%E1%BA%BFn-k/1353465846826337",
+                    "source": "facebook.com",
+                    "summary": "______ *Chương trình Al Thực Chiến là chương trình đặc biệt của Tập đoàn Vingroup do Trường Đại học VinUni phối hợp triển khai nhằm đào tạo nguồn nhân lực AI “ ...Read more",
+                    "score": 0.7339103
+                  },
+                  {
+                    "title": "VinUniversity - Inside VINGROUP Applied AI Talent Program...",
+                    "url": "https://www.facebook.com/vinuniversity/posts/inside-vingroup-applied-ai-talent-program-a-3-minute-conversation-with-dr-le-mai/1378031821036406",
+                    "source": "facebook.com",
+                    "summary": "All reactions:\n\n2.9K\n\n18 comments\n\n57 shares\n\nLike\n\nComment\n\nAuthor\n\nVinUniversity\n\nChương trình Đào tạo Nhn tài AI thực chiến của Tập đoàn Vingroup có gì khác biệt?\n\nĐiều gì tạo nên một thế hệ nhn tài AI sẵn sàng giải quyết những bài toán của thế giới thực?\n\nTừ thiết kế chương trình đến triết lý đào tạo, TS. Lê Mai Lan chia sẻ tầm nhìn phía sau một chương trình được thiết kế để tạo ra giá trị thực - không chỉ dừng lại ở tri thức. [...] ## VinUniversity's Post\n\n### VinUniversity is with Đào tạo Nhn tài AI thực chiến.\n\nApril 1  ·\n\nInside VINGROUP Applied AI Talent Program | A 3-Minute Conversation with Dr. Le Mai Lan\n\n(Tiếng Việt dưới phần bình luận)\n\nWhat does it take to train AI talent for the real world?\n\nFrom structure to philosophy, Dr. Mai Lan shares the vision behind a program designed for impact - not just theory.\n\nWe are ready to welcome 500 founding learners to the journey ahead!\n\n🎥 Watch the full story. [...] #VinUniversity #VinUni #AIinAction",
+                    "score": 0.6912478
+                  },
+                  {
+                    "title": "VinUniversity - OFFICIALLY OPEN FOR APPLICATIONS: INTAKE 2...",
+                    "url": "https://www.facebook.com/vinuniversity/posts/officially-open-for-applications-intake-2-3-20000-applied-ai-talent-program-a-sp/1387018123471109",
+                    "source": "facebook.com",
+                    "summary": "📌\n👉\nAi CHƯƠNG TRÌNH ĐÀO TẠO NHÂN TÀI AI THỰC CHIẾN – KHÓA CƠ BẢN\n\n### Ai CHƯƠNG TRÌNH ĐÀO TẠO NHÂN TÀI AI THỰC CHIẾN – KHÓA CƠ BẢN [...] id='clip0_15251_63610'%3E%3Cpath fill='%23fff' d='M-.002 0h16v15.9992h-16z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E) [...] 👉\n📌\n👉\n🎯\n👉\n👉\nNo photo description available.",
+                    "score": 0.511644
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Chương trình **\"Đào tạo Nhân tài AI Thực chiến\" (Applied AI Talent Program)** là một dự án đặc biệt của **Tập đoàn Vingroup** phối hợp cùng **Trường Đại học VinUni** triển khai. Mục tiêu của chương trình là đào tạo nguồn nhân lực AI \"làm được việc\" cho xã hội thông qua mô hình đào tạo tinh gọn và tốc độ.\n\nDưới đây là các thông tin chi tiết về khóa học này:\n\n### 1. Cấu trúc chương trình & Thời gian đào tạo\n*   **Thời gian học:** **12 tuần** (tốc độ và tinh gọn).\n*   **Mô hình thực chiến:** Học viên có **9 tuần thực chiến** trực tiếp với các dự án AI thực tế, dưới sự kèm cặp và hướng dẫn sát sao từ đội ngũ huấn luyện viên là các quản lý dự án AI của Vingroup và các doanh nghiệp đối tác.\n*   **Phân cấp đào tạo:** Chương trình được chia làm 2 mức độ:\n    1.  **Khóa Cơ bản:** Dành cho nhân viên tác nghiệp AI.\n    2.  **Khóa Nâng cao:** Dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên sâu.\n\n### 2. Quyền lợi đặc biệt dành cho học viên\n*   **Học phí:** Được **miễn phí 100%** học phí.\n*   **Trợ cấp:** Nhận phụ cấp **8.000.000 VND/tháng** trong suốt thời gian tham gia khóa học.\n*   **Chứng chỉ:** Nhận chứng chỉ đào tạo uy tín do Trường Đại học VinUni và Tập đoàn Vingroup đồng cấp.\n*   **Cơ hội việc làm:** Sau khi tốt nghiệp, học viên có cơ hội được tuyển dụng trực tiếp vào các công ty thuộc Tập đoàn Vingroup với mức lương cam kết hấp dẫn theo năng lực thực chiến:\n    *   *Năng lực xuất sắc:* **30 - 50 triệu VND/tháng**.\n    *   *Năng lực tốt:* **20 - 30 triệu VND/tháng**.\n    *   *Năng lực khá:* **15 - 20 triệu VND/tháng**.\n\n### 3. Thông tin tuyển sinh\n*   **Mục tiêu dài hạn:** Vingroup hướng tới đào tạo **20.000 nhân tài AI thực chiến**.\n*   **Thời gian tuyển sinh khóa đầu tiên:** Diễn ra từ ngày **01/02 đến 10/02/2026**. \n*   Hiện tại chương trình đã và đang tiếp tục mở các đợt tuyển sinh tiếp theo (như Intake 2, Intake 3).\n\n*(Nguồn tham khảo chi tiết tại website chính thức của [VinUni](https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban) và [Vingroup](https://vingroup.net/tin-tuc-su-kien/bai-viet/3800/vingroup-dao-tao-20000-nhan-tai-ai-thuc-chien-phu-cap-8-trieu-dongthang))*",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "timeframe": "year",
+            "query": "khóa học AI thực chiến VinAI Vingroup",
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "khóa học AI thực chiến VinAI Vingroup",
+            "topic": "general",
+            "timeframe": "year",
+            "items": [
+              {
+                "title": "Thông tin Tuyển sinh Chương trình Đào tạo Nhân tài AI ...",
+                "url": "https://vinuni.edu.vn/vi/thong-tin-tuyen-sinh-chuong-trinh-dao-tao-nhan-tai-ai-thuc-chien-khoa-co-ban",
+                "source": "vinuni.edu.vn",
+                "summary": "Chương trình Al Thực Chiến là chương trình đặc biệt của Tập đoàn Vingroup do Trường Đại học VinUni phối hợp triển khai nhằm đào tạo nguồn nhn lực AI “làm được việc” cho xã hội thông qua mô hình đào tạo tinh gọn, tốc độ trong 12 tuần; cùng cơ hội việc làm với mức lương đặc biệt hấp dẫn tỷ lệ thuận với năng lực thực chiến.\n\nChương trình có hai mức độ: (1) Cơ bản dành cho nhn viên tác nghiệp AI và (2) Nng cao dành cho chuyên gia, kỹ sư và lãnh đạo các dự án AI trong các lĩnh vực chuyên su. [...] 3. Học viên có 9 tuần thực chiến với dự án AI thật, được đội ngũ huấn luyện viên là quản lý dự án AI của Vingroup và các doanh nghiệp đối tác kèm cặp.\n4. Học viên được miễn học phí và nhận phụ cấp 8 triệu VND/tháng trong suốt thời gian tham gia chương trình. [...] 5. Học viên tốt nghiệp có cơ hội được tuyển dụng vào các công ty của Vingroup với mức lương đặc biệt hấp dẫn, phụ thuộc vào năng lực thực chiến. Năng lực xuất sắc: 30-50 triệu VND/tháng; Năng lực tốt: 20-30 triệu VND/tháng; Năng lực khá: 15-20 triệu VND/tháng.\n6. Chứng chỉ đào tạo do Trường Đại học VinUni và Tập đoàn Vingroup đồng cấp, danh giá và uy tín.",
+                "score": 0.8252664
+              },
+              {
+                "title": "VINGROUP ĐÀO TẠO 20.000 NHÂN TÀI AI THỰC CHIẾN",
+                "url": "https://vingroup.net/tin-tuc-su-kien/bai-viet/3800/vingroup-dao-tao-20000-nhan-tai-ai-thuc-chien-phu-cap-8-trieu-dongthang",
+                "source": "vingroup.net",
+                "summary": "Jan 28, 2026 — Chương trình đào tạo nhân viên và nhân tài AI của Tập đoàn Vingroup sẽ chính thức tuyển sinh khóa đầu tiên từ ngày 01/02 đến 10/02/2026 tại Đại học VinUni và ...Read more",
+                "score": 0.79099923
+              },
+              {
+                "title": "CHƯƠNG TRÌNH ĐÀO TẠO NHÂN TÀI AI THỰC CHIẾN ( ...",
+                "url": "https://www.facebook.com/vinuniversity/posts/th%C3%B4ng-b%C3%A1o-k%E1%BA%BFt-qu%E1%BA%A3-v%C3%B2ng-h%E1%BB%93-s%C6%A1-%C4%91%E1%BB%A3t-1-ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%C3%A0o-t%E1%BA%A1o-nh%C3%A2n-t%C3%A0i-ai-th%E1%BB%B1c-chi%E1%BA%BFn-k/1353465846826337",
+                "source": "facebook.com",
+                "summary": "______ *Chương trình Al Thực Chiến là chương trình đặc biệt của Tập đoàn Vingroup do Trường Đại học VinUni phối hợp triển khai nhằm đào tạo nguồn nhân lực AI “ ...Read more",
+                "score": 0.7339103
+              },
+              {
+                "title": "VinUniversity - Inside VINGROUP Applied AI Talent Program...",
+                "url": "https://www.facebook.com/vinuniversity/posts/inside-vingroup-applied-ai-talent-program-a-3-minute-conversation-with-dr-le-mai/1378031821036406",
+                "source": "facebook.com",
+                "summary": "All reactions:\n\n2.9K\n\n18 comments\n\n57 shares\n\nLike\n\nComment\n\nAuthor\n\nVinUniversity\n\nChương trình Đào tạo Nhn tài AI thực chiến của Tập đoàn Vingroup có gì khác biệt?\n\nĐiều gì tạo nên một thế hệ nhn tài AI sẵn sàng giải quyết những bài toán của thế giới thực?\n\nTừ thiết kế chương trình đến triết lý đào tạo, TS. Lê Mai Lan chia sẻ tầm nhìn phía sau một chương trình được thiết kế để tạo ra giá trị thực - không chỉ dừng lại ở tri thức. [...] ## VinUniversity's Post\n\n### VinUniversity is with Đào tạo Nhn tài AI thực chiến.\n\nApril 1  ·\n\nInside VINGROUP Applied AI Talent Program | A 3-Minute Conversation with Dr. Le Mai Lan\n\n(Tiếng Việt dưới phần bình luận)\n\nWhat does it take to train AI talent for the real world?\n\nFrom structure to philosophy, Dr. Mai Lan shares the vision behind a program designed for impact - not just theory.\n\nWe are ready to welcome 500 founding learners to the journey ahead!\n\n🎥 Watch the full story. [...] #VinUniversity #VinUni #AIinAction",
+                "score": 0.6912478
+              },
+              {
+                "title": "VinUniversity - OFFICIALLY OPEN FOR APPLICATIONS: INTAKE 2...",
+                "url": "https://www.facebook.com/vinuniversity/posts/officially-open-for-applications-intake-2-3-20000-applied-ai-talent-program-a-sp/1387018123471109",
+                "source": "facebook.com",
+                "summary": "📌\n👉\nAi CHƯƠNG TRÌNH ĐÀO TẠO NHÂN TÀI AI THỰC CHIẾN – KHÓA CƠ BẢN\n\n### Ai CHƯƠNG TRÌNH ĐÀO TẠO NHÂN TÀI AI THỰC CHIẾN – KHÓA CƠ BẢN [...] id='clip0_15251_63610'%3E%3Cpath fill='%23fff' d='M-.002 0h16v15.9992h-16z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E) [...] 👉\n📌\n👉\n🎯\n👉\n👉\nNo photo description available.",
+                "score": 0.511644
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T11:10:08"
+    }
+  ]
+}
