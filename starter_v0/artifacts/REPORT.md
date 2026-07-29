@@ -29,7 +29,7 @@ Research Agent của nhóm G27 là một trợ lý nghiên cứu thông minh: nh
 
 **Link dùng thử (truy cập được trong showdown):**
 
-> URL: *(sẽ cập nhật link Cloudflare Tunnel từ Thành viên 4 trước demo)*
+> URL: https://uniprotkb-heading-jennifer-metallica.trycloudflare.com
 
 ## A2. Tool agent có
 
@@ -75,9 +75,10 @@ Fill from `artifacts/version_log.csv` and `runs/*.json`.
 | Version | Prompt/tool change | Hypothesis | case_accuracy | tool_routing_accuracy | argument_accuracy | multiturn_accuracy | Run File |
 |---|---|---|---:|---:|---:|---:|---|
 | v0 | Baseline (trap prompt — không có luật cụ thể) | Prompt cố tình có lỗi để đo baseline | **0.70** | 0.75 | 0.70 | 1.00 | `v0_B_base_openai_20260729T102018444825.json` |
-| v1 | Sửa `system_prompt.md`: thêm luật clarify khi thiếu handle/URL, boundary yes/no, từ chối out-of-scope | Thêm luật rõ ràng sẽ fix lỗi missing_info + wrong_boundary + out_of_scope | **0.95** | 0.95 | 0.95 | 0.83 | `v1_B_base_openai_20260729T103707406239.json` |
-| v2 | Sửa `system_prompt.md`: thêm luật huỷ bỏ tool khi user cancel, xử lý song song rõ hơn | Explicit source switch nên xoá tool đã bị huỷ khỏi các turn sau | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v2_B_base_openai_20260729T111647141782.json` |
-| v3 | *(Sẽ chạy sau demo — chờ feedback để xác định hypothesis)* | — | — | — | — | — | — |
+| v1 | Sửa `system_prompt.md`: clarify khi thiếu handle/URL, boundary yes/no, từ chối out-of-scope | Thêm luật rõ ràng sẽ fix missing_info + wrong_boundary + out_of_scope | **0.95** | 0.95 | 0.95 | 0.83 | `v1_B_base_openai_20260729T103707406239.json` |
+| v2 | Sửa `system_prompt.md`: luật huỷ bỏ tool khi user cancel, xử lý song song rõ hơn | Explicit source switch nên xoá tool bị huỷ khỏi các turn sau | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v2_B_base_openai_20260729T111647141782.json` |
+| v3 | Sửa `system_prompt.md` + `tools.yaml`: resolve conflict cancellation vs parallel routing | Final active sources quyết định tool set | **0.85** | **1.00** | 0.85 | 0.83 | `v3_B_base_openai_20260729T112638456486.json` |
+| v4 | Sửa `system_prompt.md`: chuẩn hoá query — keyword sạch vào `query`, ngữ nghĩa thời gian vào `timeframe`/`topic` | Tách đúng field sẽ fix các wrong_arg_value query còn sót | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v4_B_base_openai_20260729T112823832198.json` |
 
 ## B2. Failure analysis
 
@@ -122,42 +123,41 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 | Turn | User Input | Version | Tool Calls | Outcome |
 |---|---|---|---|---|
-| 2 | `"hello"` | v0 | `send(text="Xin chào!...")` → `send(confirmed=true)` | ❌ Gọi `send` cho tin chào hỏi — sai boundary |
-| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(...)` × 3 lần | ⚠️ Đúng tool nhưng lặp 3 lần, query nhồi cả "âm lịch dương lịch" |
+| 2 | `"hello"` | v0 | `send(...)` → `send(confirmed=true)` | ❌ Gọi `send` cho tin chào hỏi — sai boundary |
+| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(...)` × 3 lần | ⚠️ Đúng tool nhưng lặp 3 lần, query nhồi ngữ nghĩa |
 | 4 | `"hello"` | v0 | `lookup(query="tin tức công nghệ nổi bật hôm nay")` | ❌ Câu chào không cần tool, v0 vẫn gọi lookup |
 
-**Phiên 2 (v2 — sau khi tối ưu):** `ui_v0_openrouter_20260729T113233038379.transcript.json`
+**Phiên 2 (v4 — prompt final, demo đa kịch bản):** `ui_v0_openrouter_20260729T121747681915.transcript.json`
 
 | Turn | User Input | Version | Tool Calls | Outcome |
 |---|---|---|---|---|
-| 1 | `"Lấy 5 tweet mới nhất của Sam Altman."` | v2 | `timeline(screenname="sama", limit=5)` | ✅ Routing đúng, map tên → handle tự động |
-| 2 | `"Tóm tắt 5 tweet mới nhất giúp mình."` | v2 | `timeline(screenname="sama", limit=5)` | ✅ Giữ context từ turn 1, không hỏi lại handle |
+| 2 | `"Tin AI hôm nay có gì nổi bật?"` | v4 | `lookup(query="AI", topic=news, timeframe=day)` | ✅ Query sạch, routing đúng |
+| 3 | `"Lấy 5 tweet mới nhất của Sam Altman."` | v4 | `timeline(screenname="sama", limit=5)` | ✅ Map tên → handle tự động |
+| 4 | `"Tóm tắt bài này giúp mình: https://openai.com/news/"` | v4 | `fetch(url="https://openai.com/news/")` | ✅ Có URL cụ thể → gọi fetch, không search |
+| 5 | `"năm nay anh bảy vô địch wc đúng không?"` | v4 | *(no tool)* | ✅ Từ chối đúng — ngoài phạm vi |
+| 6 | `"hi"` | v4 | *(no tool)* | ✅ Câu chào → trả lời thẳng, không gọi tool |
+| 9 | `"những công nghệ AI mới nhất hiện nay đang có những gì?"` | v4 | `lookup(query="công nghệ AI mới", topic=news)` | ✅ Lookup đúng, không nhồi "mới nhất" vào query |
 
-**Phiên 3 (v2 — research):** `ui_v0_openrouter_20260729T113432760672.transcript.json`
-
-| Turn | User Input | Version | Tool Calls | Outcome |
-|---|---|---|---|---|
-| 1 | `"Tin AI hôm nay có gì nổi bật?"` | v2 | `lookup(query="AI", topic="news", timeframe="day")` | ✅ Query sạch — không nhồi "hôm nay" vào query |
-
-> **So sánh v0 vs v2:** v0 gọi sai tool (send cho chào hỏi), lặp tool, nhồi từ thời gian vào query. v2 routing chuẩn 100%, query sạch, giữ context đa lượt.
+> **So sánh v0 vs v4:** v0 gọi `send` sai, gọi tool thừa cho câu chào, nhồi ngữ nghĩa vào query. v4 routing chuẩn 100%: đúng tool, query sạch, từ chối ngoài phạm vi đọng nhất.
 
 ## B5. Tool capability evidence
 
 | Category | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
-| Core: `lookup` (Tavily) | `v1_B_base_openai_*.json` | Tìm tin tức theo topic+timeframe | Quota Tavily free tier |
-| Core: `fetch` (Firecrawl) | smoke test PASS | Đọc nội dung URL thành công | Mỗi lần fetch tốn credit |
-| Core: `timeline`/`social_search` (RapidAPI) | smoke test PASS | Lấy tweet theo handle và theo keyword | RapidAPI free plan có rate limit |
-| Core: `clarify` | `R10`, `R11`, `R12` (v1) | Hỏi lại đúng khi thiếu info, xác nhận trước khi send | — |
-| Must-have: Tool mới (T.viên 3) | *(chờ code)* | *(chờ cập nhật)* | — |
+| Core: `lookup` (Tavily) | `v4_B_base_openai_*.json`, transcript T2 & T9 | Tìm tin tức đúng topic+timeframe, query sạch | Quota Tavily free tier |
+| Core: `fetch` (Firecrawl) | transcript T4 | Đọc URL cụ thể thành công | Mỗi lần fetch tốn credit |
+| Core: `timeline` (RapidAPI) | transcript T3, case R07 (v4 PASS) | Lấy tweet theo handle, map tên nổi tiếng → handle tự động | RapidAPI free plan có rate limit |
+| Core: `social_search` (RapidAPI) | case R02, R06 (v4 PASS) | Tìm tweet theo keyword, Latest/Top | Rate limit |
+| Core: `clarify` | case R10, R11 (v4 PASS) | Hỏi lại đúng khi thiếu info, xác nhận trước khi send | — |
+| Must-have: Tool mới (T.viên 3) | *(chờ push lên main)* | *(chờ cập nhật)* | — |
 
 ## B6. Reflection
 
-- **Những fix thuộc về `system_prompt.md`:** (1) Luật clarify khi thiếu handle/URL; (2) Luật xác nhận yes/no trước khi `send`; (3) Luật từ chối out-of-scope (toán, code); (4) Luật huỷ bỏ tool khi user cancel. Những luật này chỉ model mới đọc và thực thi được — không phải schema tool.
-- **Những fix thuộc về `tools.yaml`:** Mô tả rõ khi nào dùng `topic=news`, convention `timeframe` ("hôm nay" → `day`), và boundary xác nhận của `send`. Cụ thể hoá description giúp model chọn đúng arg mà không cần nhồi thêm ngữ nghĩa vào `query`.
-- **Failure cần review thủ công thay vì grader:** Case R13 (v0) — routing đúng (gọi cả `lookup` và `social_search`) nhưng `query` arg không khớp chính xác ("AI news" vs "AI"). Grader chấm fail nhưng intent thực tế gần đúng. Transcript Turn 3 (hỏi ngày âm/dương lịch) gọi đúng tool nhưng lặp 3 lần — routing PASS nhưng execution kém hiệu quả.
-- **Thành tựu nổi bật đến v2:** Từ v0 (70%) → v2 (100%) chỉ qua 2 vòng sửa `system_prompt.md`, mỗi vòng fix một nhóm lỗi cụ thể. Tất cả 20 case PASS ở v2 với `provider_error_cases=0` và `measured_cases=20`.
-- **Dự kiến cho v3 (sau demo):** Áp dụng feedback từ demo để xác định hypothesis tiếp theo — có thể là chuẩn hoá query, tối ưu multi-turn context, hoặc tích hợp tool mới.
+- **Những fix thuộc về `system_prompt.md`:** (1) Clarify khi thiếu handle/URL; (2) Xác nhận yes/no trước khi `send`; (3) Từ chối out-of-scope (toán, code, bóng đá); (4) Huỷ bỏ tool khi user cancel; (5) Chuẩn hoá query — chỉ keyword sạch vào `query`, ngữ nghĩa thời gian vào `timeframe`, loại tin vào `topic`.
+- **Những fix thuộc về `tools.yaml`:** Mô tả rõ convention `timeframe` ("hôm nay" → `day`), khi nào dùng `topic=news`, và boundary xác nhận của `send`. Cụ thể hoá description giúp model chọn đúng arg mà không suy diễn.
+- **Failure cần review thủ công thay vì grader:** Case R13 (v0, v3) — routing đúng (gọi đủ `lookup` + `social_search`) nhưng grader chấm fail vì `query` arg không khớp chính xác. Intent thực tế gần đúng, đây là false negative của grader. Transcript Turn 3 (v0) gọi đúng tool nhưng lặp 3 lần — routing PASS nhưng execution tốn quota.
+- **Thành tựu:** Từ v0 (70%) → v4 (100%) qua 4 vòng, mỗi vòng chỉ sửa một hypothesis. Các case live chat cũng xác nhận v4 từ chối đúng ngoài phạm vi, gọi fetch cho URL cụ thể, và không nhồi ngữ nghĩa vào query.
+- **Bài học:** Query sạch (keyword only) vs nhồi ngữ nghĩa là pattern lỗi phổ biến nhất. Tool declaration description và system prompt phải thống nhất về convention argument để tránh model tự suy diễn sai.
 
 
 ---
