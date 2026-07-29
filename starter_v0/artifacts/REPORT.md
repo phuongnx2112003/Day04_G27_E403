@@ -74,10 +74,10 @@ Fill from `artifacts/version_log.csv` and `runs/*.json`.
 
 | Version | Prompt/tool change | Hypothesis | case_accuracy | tool_routing_accuracy | argument_accuracy | multiturn_accuracy | Run File |
 |---|---|---|---:|---:|---:|---:|---|
-| v0 | Baseline (trap prompt) | Prompt cố tình có lỗi để đo baseline | **0.70** | 0.75 | 0.70 | 1.00 | `v0_B_base_openai_20260729T102018444825.json` |
-| v1 | Sửa system_prompt.md: thêm luật clarify, boundary, out-of-scope | Thêm luật rõ ràng sẽ fix các lỗi missing_info + wrong_boundary + out_of_scope | **0.95** | 0.95 | 0.95 | 0.83 | `v1_B_base_openai_20260729T103707406239.json` |
-| v2 | *(Chờ Đội trưởng chạy và cung cấp kết quả)* | — | — | — | — | — | — |
-| v3 | *(Chờ Đội trưởng chạy và cung cấp kết quả)* | — | — | — | — | — | — |
+| v0 | Baseline (trap prompt — không có luật cụ thể) | Prompt cố tình có lỗi để đo baseline | **0.70** | 0.75 | 0.70 | 1.00 | `v0_B_base_openai_20260729T102018444825.json` |
+| v1 | Sửa `system_prompt.md`: thêm luật clarify khi thiếu handle/URL, boundary yes/no, từ chối out-of-scope | Thêm luật rõ ràng sẽ fix lỗi missing_info + wrong_boundary + out_of_scope | **0.95** | 0.95 | 0.95 | 0.83 | `v1_B_base_openai_20260729T103707406239.json` |
+| v2 | Sửa `system_prompt.md`: thêm luật huỷ bỏ tool khi user cancel, xử lý song song rõ hơn | Explicit source switch nên xoá tool đã bị huỷ khỏi các turn sau | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v2_B_base_openai_20260729T111647141782.json` |
+| v3 | Sửa `system_prompt.md` + `tools.yaml`: resolve conflict cancellation vs parallel routing | Final active sources quyết định tool set — không bị ảnh hưởng bởi turn đã huỷ | *(chờ run file từ Đội trưởng)* | — | — | — | — |
 
 ## B2. Failure analysis
 
@@ -118,11 +118,15 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 ## B4. Live chat evidence
 
-> *(Sẽ cập nhật sau khi có transcript từ UI — thư mục `transcripts/`)*
+Trích từ `transcripts/ui_v0_openrouter_20260729T101200411379.transcript.json` — phiên live chat thực tế qua UI:
 
-| Scenario/Turn | Version | Tool Calls + Args | Transcript/Run | Outcome |
+| Turn | User Input | Version | Tool Calls + Args | Outcome |
 |---|---|---|---|---|
-| *(chờ UI chạy)* | — | — | — | — |
+| 2 | `"hello"` | v0 | `send(text="Xin chào!...")` → `send(confirmed=true, ...)` | ❌ v0 tự gọi `send` cho tin chào hỏi thông thường — sai boundary |
+| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(query="hôm nay ngày bao nhiêu âm lịch dương lịch 2024", timeframe=day)` × 3 lần | ⚠️ Gọi đúng tool nhưng lặp 3 lần lookup, query không chuẩn |
+| 4 | `"hello\"` | v0 | `lookup(query="tin tức công nghệ nổi bật hôm nay", timeframe=day)` | ❌ Câu chào → không cần tool, nhưng v0 vẫn gọi lookup |
+
+> **Nhận xét:** Transcript v0 minh chứng rõ vấn đề của trap prompt: agent gọi `send` không cần thiết, gọi tool thừa cho câu meta. Đây là lý do phải tối ưu lên v1→v2. Bổ sung thêm transcript v2/v3 sau khi chạy live chat với prompt mới.
 
 ## B5. Tool capability evidence
 
@@ -136,118 +140,11 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 ## B6. Reflection
 
-- **Những fix thuộc về `system_prompt.md`:** Luật clarify khi thiếu handle/URL, luật xác nhận yes/no trước khi `send`, luật từ chối out-of-scope (toán, code). Những luật này chỉ model mới đọc và thực thi được — không phải schema tool.
-- **Những fix thuộc về `tools.yaml`:** Mô tả rõ khi nào dùng `topic=news`, convention `timeframe` ("hôm nay" → `day`), và boundary xác nhận của `send`.
-- **Failure cần review thủ công thay vì grader:** Case R13 — routing đúng (gọi cả `lookup` và `social_search`) nhưng `query` arg không khớp chính xác ("AI news" vs "AI"). Grader chấm fail nhưng intent thực tế gần đúng.
-- **Cải thiện tiếp theo:** Thêm tool mới để mở rộng khả năng nghiên cứu; cân nhắc viết eval case cho tool mới; tối ưu thêm `multiturn_accuracy` (hiện v1 = 0.83).
+- **Những fix thuộc về `system_prompt.md`:** Luật clarify khi thiếu handle/URL, luật xác nhận yes/no trước khi `send`, luật từ chối out-of-scope (toán, code), luật huỷ bỏ tool khi user cancel. Những luật này chỉ model mới đọc và thực thi được — không phải schema tool.
+- **Những fix thuộc về `tools.yaml`:** Mô tả rõ khi nào dùng `topic=news`, convention `timeframe` ("hôm nay" → `day`), và boundary xác nhận của `send`. Việc làm rõ description trong tools.yaml giúp model chọn đúng arg mà không cần nhồi thêm vào query.
+- **Failure cần review thủ công thay vì grader:** Case R13 (v0) — routing đúng (gọi cả `lookup` và `social_search`) nhưng `query` arg không khớp chính xác ("AI news" vs "AI"). Grader chấm fail nhưng intent thực tế gần đúng. Tương tự, transcript Turn 3 (hỏi ngày âm/dương lịch) gọi đúng tool nhưng lặp 3 lần — routing PASS, execution cần cải thiện.
+- **Thành tựu nổi bật:** Từ v0 (70%) → v2 (100%) chỉ qua 2 vòng sửa `system_prompt.md`. Tất cả 20 case đều PASS ở v2 với `provider_error_cases=0` và `measured_cases=20`.
+- **Cải thiện tiếp theo:** Bổ sung tool mới để mở rộng phạm vi nghiên cứu; viết thêm eval case cho tool mới; chạy group eval sau khi tích hợp tool mới vào v3.
 
 
 ---
-
-# PHẦN A — Giới thiệu agent
-
-## A1. Agent này làm được gì
-
-> 1–2 câu mô tả agent dùng để làm gì.
-
-Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc URL và tổng hợp thành digest."
-
-**Link dùng thử (truy cập được trong showdown):**
-
-> Dán public URL nếu người khác cần mở từ máy riêng; localhost cũng được nếu demo trực tiếp trên máy trình chiếu. Streamlit được khuyến nghị, nhưng nhóm có thể dùng bất kỳ framework nào.
->
-> URL:
-
-## A2. Tool agent có
-
-> Liệt kê các tool agent đang dùng. Mỗi tool 1 dòng: tên + làm được gì.
-
-| Tên tool | Làm được gì | Tool mới nhóm thêm? |
-|---|---|---|
-| clarify | hỏi lại người dùng khi thiếu thông tin | không |
-|  |  |  |
-|  |  |  |
-
-## A3. Câu hỏi mẫu để thử
-
-> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay.
-
-1.
-2.
-3.
-
-## A4. Kịch bản demo đã rehearse
-
-> Chuẩn bị 3–5 scenario. Mỗi scenario cần cho thấy tool đã làm gì và một thay đổi cụ thể giữa các version.
-
-| Scenario | Tool trace cần thấy | Câu chuyện cải thiện version | Fallback run/transcript |
-|---|---|---|---|
-|  |  |  |  |
-
----
-
-# PHẦN B — Chi tiết / Bằng chứng
-
-> Điều kiện metric hợp lệ: `provider_error_cases` phải bằng `0`; `measured_cases` phải bằng `total_cases`; và bất kỳ `tool_results` nào có error đều phải được review thủ công vì routing PASS không chứng minh tool execution đã đúng.
-
-## B1. Version evidence
-
-Fill from `artifacts/version_log.csv` and `runs/*.json`.
-
-| Version | Prompt/tool change | Hypothesis | Metric name | Before | After | Run File |
-|---|---|---|---|---:|---:|---|
-| v0 | baseline |  |  |  |  |  |
-| v1 |  |  |  |  |  |  |
-| v2 |  |  |  |  |  |  |
-| v3 |  |  |  |  |  |  |
-
-## B2. Failure analysis
-
-Use actual failures from `results[*].result.failures`.
-
-| Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
-|---|---|---|---|---|
-|  |  |  |  |  |
-
-## B3. Team eval cases
-
-List the 10 cases added to `data/eval_group.json`:
-
-- 5 single-turn
-- 5 multi-turn
-
-This section is for the mandatory team-authored eval set. Optional built-ins do
-not belong here.
-
-File template để trống có chủ đích; nhóm phải tự thiết kế đủ 10 case.
-
-| Case ID | What It Tests | Expected Tool/Behavior | Result |
-|---|---|---|---|
-|  |  |  |  |
-
-## B4. Live chat evidence
-
-Use `transcripts/*.transcript.json`.
-
-| Scenario/Turn | Version | Tool Calls + Args | Transcript/Run | Outcome |
-|---|---|---|---|---|
-|  |  |  |  |  |
-
-## B5. Tool capability evidence
-
-Phân loại rõ tool mới bắt buộc, optional built-in và tool đủ điều kiện bonus. Chỉ ghi Telegram/PDF nếu nhóm thực sự dùng; base report không cần chúng.
-
-UI is core deliverable, not bonus. Do not list it here.
-
-| Category | Evidence File | What Worked | Risk / Guardrail |
-|---|---|---|---|
-| Must-have: tool mới đầu tiên |  |  |  |
-| Optional built-in |  |  |  |
-| Bonus: tool mới thứ 4 trở đi |  |  |  |
-
-## B6. Reflection
-
-- Which fixes belonged in `system_prompt.md`?
-- Which fixes belonged in `tools.yaml`?
-- Which failure needed manual review instead of automatic grading?
-- What would you improve next?
