@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v0_openrouter_20260729T103312500555",
+  "version": "v0",
+  "artifact_version": "v0+peb1c8179815b+t6cdb53d5d7b8",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "openrouter",
+  "model": null,
+  "system_prompt": "D:\\DATA\\Visual\\Day04_G27_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\DATA\\Visual\\Day04_G27_E403\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T10:33:12",
+  "updated_at": "2026-07-29T10:33:19",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T10:33:18",
+      "user": "hello ",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Missing API key env var: OPENROUTER_API_KEY",
+      "ended_at": "2026-07-29T10:33:19"
+    }
+  ]
+}

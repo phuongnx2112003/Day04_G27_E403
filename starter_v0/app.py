@@ -11,6 +11,7 @@ from chat import (
     now_iso,
     safe_slug,
     ARTIFACTS_DIR
+    TRANSCRIPTS_DIR
 )
 from env_loader import load_lab_env
 from providers import make_provider
@@ -19,7 +20,6 @@ from versioning import build_artifact_version, artifact_version_dict
 
 # Khởi tạo môi trường (nạp .env)
 ROOT = Path(__file__).parent
-TRANSCRIPTS_DIR = ROOT / "transcripts"
 load_lab_env(ROOT)
 
 # st.set_page_config(page_title="Research Agent UI", page_icon="🤖", layout="wide")
@@ -28,7 +28,6 @@ load_lab_env(ROOT)
 with st.sidebar:
     st.header("⚙️ Cấu hình Model")
     provider_name = st.selectbox("Provider", ["openrouter", "openai", "anthropic", "gemini"])
-    model_name = st.text_input("Model Override (bỏ trống để dùng mặc định)", value="")
     version_label = st.text_input("Version Label", value="v0")
     max_tool_rounds = st.number_input("Max Tool Rounds", min_value=1, max_value=10, value=4)
     history_window = st.number_input("History Window (số cặp User/Agent)", min_value=1, max_value=20, value=5)
@@ -64,7 +63,6 @@ if "history" not in st.session_state:
         "transcript_id": transcript_id,
         **artifact_version_dict(artifact_version),
         "provider": provider_name,
-        "model": model_name or None,
         "system_prompt": str(system_prompt_path),
         "tools": str(tools_path),
         "history_window": history_window,
@@ -75,7 +73,7 @@ if "history" not in st.session_state:
     }
 
 st.title("🤖 Trợ lý AI (Research Agent)")
-st.caption(f"Artifact Version: `{st.session_state.transcript['artifact_version']}` | Ghi log tại: `{st.session_state.transcript_path.name}`")
+# st.caption(f"Artifact Version: `{st.session_state.transcript['artifact_version']}` | Ghi log tại: `{st.session_state.transcript_path.name}`")
 
 # --- 3. HIỂN THỊ LỊCH SỬ CHAT VÀ TOOL TRACES ---
 for msg in st.session_state.history:

@@ -1,15 +1,15 @@
 [theme]
 # Màu chủ đạo (dùng cho các nút bấm, thanh trượt, loading...)
-primaryColor = "#FF4B4B"
+primaryColor = "#8bbcf4"
 
 # Màu nền chính của toàn bộ trang
 backgroundColor = "#FFFFFF"
 
 # Màu nền phụ (dùng cho sidebar ở bên trái)
-secondaryBackgroundColor = "#F0F2F6"
+secondaryBackgroundColor = "#bacef6"
 
 # Màu chữ
-textColor = "#31333F"
+textColor = "#0b1447"
 
 # Phông chữ (có thể chọn: "sans serif", "serif", "monospace")
 font = "sans serif"
