@@ -77,7 +77,8 @@ Fill from `artifacts/version_log.csv` and `runs/*.json`.
 | v0 | Baseline (trap prompt — không có luật cụ thể) | Prompt cố tình có lỗi để đo baseline | **0.70** | 0.75 | 0.70 | 1.00 | `v0_B_base_openai_20260729T102018444825.json` |
 | v1 | Sửa `system_prompt.md`: thêm luật clarify khi thiếu handle/URL, boundary yes/no, từ chối out-of-scope | Thêm luật rõ ràng sẽ fix lỗi missing_info + wrong_boundary + out_of_scope | **0.95** | 0.95 | 0.95 | 0.83 | `v1_B_base_openai_20260729T103707406239.json` |
 | v2 | Sửa `system_prompt.md`: thêm luật huỷ bỏ tool khi user cancel, xử lý song song rõ hơn | Explicit source switch nên xoá tool đã bị huỷ khỏi các turn sau | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v2_B_base_openai_20260729T111647141782.json` |
-| v3 | Sửa `system_prompt.md` + `tools.yaml`: resolve conflict cancellation vs parallel routing | Final active sources quyết định tool set — không bị ảnh hưởng bởi turn đã huỷ | *(chờ run file từ Đội trưởng)* | — | — | — | — |
+| v3 | Sửa `system_prompt.md` + `tools.yaml`: resolve conflict cancellation vs parallel routing | Final active sources quyết định tool set — không bị ảnh hưởng bởi turn đã huỷ | **0.85** | **1.00** | 0.85 | 0.83 | `v3_B_base_openai_20260729T112638456486.json` |
+| v4 | Sửa `system_prompt.md`: chuẩn hoá query lookup — news/time words vào `topic`/`timeframe`, không nhồi vào `query` | Tách keyword sạch vào `query`, đặt `topic=news` + `timeframe` riêng sẽ fix wrong_arg_value còn sót | **1.00** ✅ | **1.00** | **1.00** | **1.00** | `v4_B_base_openai_20260729T112823832198.json` |
 
 ## B2. Failure analysis
 
@@ -118,15 +119,28 @@ Trích từ `results[*].result.failures` trong file run JSON của **v0** (6 cas
 
 ## B4. Live chat evidence
 
-Trích từ `transcripts/ui_v0_openrouter_20260729T101200411379.transcript.json` — phiên live chat thực tế qua UI:
+**Phiên 1 (v0 — trap prompt):** `ui_v0_openrouter_20260729T101200411379.transcript.json`
 
-| Turn | User Input | Version | Tool Calls + Args | Outcome |
+| Turn | User Input | Version | Tool Calls | Outcome |
 |---|---|---|---|---|
-| 2 | `"hello"` | v0 | `send(text="Xin chào!...")` → `send(confirmed=true, ...)` | ❌ v0 tự gọi `send` cho tin chào hỏi thông thường — sai boundary |
-| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(query="hôm nay ngày bao nhiêu âm lịch dương lịch 2024", timeframe=day)` × 3 lần | ⚠️ Gọi đúng tool nhưng lặp 3 lần lookup, query không chuẩn |
-| 4 | `"hello\"` | v0 | `lookup(query="tin tức công nghệ nổi bật hôm nay", timeframe=day)` | ❌ Câu chào → không cần tool, nhưng v0 vẫn gọi lookup |
+| 2 | `"hello"` | v0 | `send(text="Xin chào!...")` → `send(confirmed=true)` | ❌ Gọi `send` cho tin chào hỏi — sai boundary |
+| 3 | `"hôm nay là ngày nào, cả âm lịch và dương lịch"` | v0 | `lookup(...)` × 3 lần | ⚠️ Đúng tool nhưng lặp 3 lần, query nhồi cả "âm lịch dương lịch" |
+| 4 | `"hello\"` | v0 | `lookup(query="tin tức công nghệ nổi bật hôm nay")` | ❌ Câu chào không cần tool, v0 vẫn gọi lookup |
 
-> **Nhận xét:** Transcript v0 minh chứng rõ vấn đề của trap prompt: agent gọi `send` không cần thiết, gọi tool thừa cho câu meta. Đây là lý do phải tối ưu lên v1→v2. Bổ sung thêm transcript v2/v3 sau khi chạy live chat với prompt mới.
+**Phiên 2 (v4 — prompt cuối):** `ui_v0_openrouter_20260729T113233038379.transcript.json`
+
+| Turn | User Input | Version | Tool Calls | Outcome |
+|---|---|---|---|---|
+| 1 | `"Lấy 5 tweet mới nhất của Sam Altman."` | v4 | `timeline(screenname="sama", limit=5)` | ✅ Routing đúng, map tên → handle tự động |
+| 2 | `"Tóm tắt 5 tweet mới nhất giúp mình."` | v4 | `timeline(screenname="sama", limit=5)` | ✅ Giữ context từ turn 1, không hỏi lại handle |
+
+**Phiên 3 (v4 — research):** `ui_v0_openrouter_20260729T113432760672.transcript.json`
+
+| Turn | User Input | Version | Tool Calls | Outcome |
+|---|---|---|---|---|
+| 1 | `"Tin AI hôm nay có gì nổi bật?"` | v4 | `lookup(query="AI", topic="news", timeframe="day")` | ✅ Query sạch — không nhồi "hôm nay" vào query |
+
+> **So sánh v0 vs v4:** v0 gọi sai tool (send cho chào hỏi), lặp tool, nhồi từ thời gian vào query. v4 routing chuẩn 100%, query sạch, giữ context đa lượt.
 
 ## B5. Tool capability evidence
 
@@ -140,11 +154,11 @@ Trích từ `transcripts/ui_v0_openrouter_20260729T101200411379.transcript.json`
 
 ## B6. Reflection
 
-- **Những fix thuộc về `system_prompt.md`:** Luật clarify khi thiếu handle/URL, luật xác nhận yes/no trước khi `send`, luật từ chối out-of-scope (toán, code), luật huỷ bỏ tool khi user cancel. Những luật này chỉ model mới đọc và thực thi được — không phải schema tool.
-- **Những fix thuộc về `tools.yaml`:** Mô tả rõ khi nào dùng `topic=news`, convention `timeframe` ("hôm nay" → `day`), và boundary xác nhận của `send`. Việc làm rõ description trong tools.yaml giúp model chọn đúng arg mà không cần nhồi thêm vào query.
-- **Failure cần review thủ công thay vì grader:** Case R13 (v0) — routing đúng (gọi cả `lookup` và `social_search`) nhưng `query` arg không khớp chính xác ("AI news" vs "AI"). Grader chấm fail nhưng intent thực tế gần đúng. Tương tự, transcript Turn 3 (hỏi ngày âm/dương lịch) gọi đúng tool nhưng lặp 3 lần — routing PASS, execution cần cải thiện.
-- **Thành tựu nổi bật:** Từ v0 (70%) → v2 (100%) chỉ qua 2 vòng sửa `system_prompt.md`. Tất cả 20 case đều PASS ở v2 với `provider_error_cases=0` và `measured_cases=20`.
-- **Cải thiện tiếp theo:** Bổ sung tool mới để mở rộng phạm vi nghiên cứu; viết thêm eval case cho tool mới; chạy group eval sau khi tích hợp tool mới vào v3.
+- **Những fix thuộc về `system_prompt.md`:** (1) Luật clarify khi thiếu handle/URL; (2) Luật xác nhận yes/no trước khi `send`; (3) Luật từ chối out-of-scope (toán, code); (4) Luật huỷ bỏ tool khi user cancel; (5) Luật chuẩn hoá query — chỉ đặt keyword sạch vào `query`, đặt context thời gian vào `timeframe` và loại tin vào `topic`. Tất cả 5 luật đều nằm trong `system_prompt.md`.
+- **Những fix thuộc về `tools.yaml`:** Mô tả rõ khi nào dùng `topic=news`, convention `timeframe` ("hôm nay" → `day`), và boundary xác nhận của `send`. Cụ thể hoá description trong tools.yaml giúp model chọn đúng arg mà không cần nhồi thêm ngữ nghĩa vào `query`.
+- **Failure cần review thủ công thay vì grader:** Case R13 (v0/v3) — routing đúng (gọi cả `lookup` và `social_search`) nhưng `query` arg không khớp chính xác ("tin AI hôm nay" vs "AI"). Grader chấm fail nhưng kết quả tìm kiếm thực tế đúng chủ đề. Transcript Turn 3 (hỏi ngày âm/dương lịch, v0) gọi đúng tool nhưng lặp 3 lần — routing PASS nhưng execution kém hiệu quả.
+- **Thành tựu nổi bật:** Từ v0 (70%) → v4 (100%) qua 4 vòng iteration, mỗi vòng chỉ sửa một hypothesis. v2 và v4 đều đạt 100% với `provider_error_cases=0` và `measured_cases=20`. Đặc biệt, v3→v4 đã giải quyết triệt để vấn đề query normalisation còn sót lại.
+- **Bài học rút ra:** Query sạch (keyword only) vs query nhồi ngữ nghĩa là một trong những pattern lỗi phổ biến nhất. Tool declaration description và system prompt phải thống nhất về convention argument để tránh model tự suy diễn.
 
 
 ---
