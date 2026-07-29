@@ -96,6 +96,17 @@ python -c "from pathlib import Path; from env_loader import load_lab_env; load_l
 
 Thay tên/args theo tool của nhóm. PASS khi registry tìm thấy tool, arguments hợp lệ, `error` là `None`, và kết quả đúng contract. Với action tool, chỉ dùng dry-run/`confirmed=False` cho quicktest.
 
+### Core smoke test cho `compare_sources`
+
+Tool này chạy local, không cần API key và không tạo file:
+
+```powershell
+python -c "from tools import TOOL_FUNCTIONS as T; r=T['compare_sources'](items=[{'title':'Source A','url':'https://a.example','summary':'AI safety evaluation.'},{'title':'Source B','url':'https://b.example','summary':'AI safety and model evaluation.'}], focus='AI safety'); print({'error':r.get('error'), 'source_count':r.get('source_count'), 'common_terms':r.get('common_terms')})"
+```
+
+PASS khi `error` là `None`, `source_count` bằng `2`, và output có các trường
+`common_terms`, `comparisons`, `limitations`.
+
 ## 5. `[CORE]` Tavily — `lookup`
 
 - [API key](https://app.tavily.com)
